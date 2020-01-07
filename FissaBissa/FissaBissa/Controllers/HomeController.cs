@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
+using FissaBissa.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using FissaBissa.Models;
 
 namespace FissaBissa.Controllers
 {
