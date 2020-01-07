@@ -1,6 +1,6 @@
 using System;
 
-namespace fissaBissa.Models
+namespace FissaBissa.Models
 {
     public class ErrorViewModel
     {

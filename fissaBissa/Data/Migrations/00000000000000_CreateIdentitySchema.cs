@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace fissaBissa.Data.Migrations
+namespace FissaBissa.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

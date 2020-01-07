@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using fissaBissa.Models;
+using FissaBissa.Models;
 
-namespace fissaBissa.Controllers
+namespace FissaBissa.Controllers
 {
     public class HomeController : Controller
     {
