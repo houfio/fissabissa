@@ -1,5 +1,3 @@
-using System;
-
 namespace FissaBissa.Models
 {
     public class ErrorViewModel
