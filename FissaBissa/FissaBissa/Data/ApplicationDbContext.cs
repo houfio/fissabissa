@@ -57,5 +57,7 @@ namespace FissaBissa.Data
                 .WithMany(r => r.Accessories)
                 .HasForeignKey(ar => ar.ReservationId);
         }
+
+        public DbSet<FissaBissa.Models.AnimalTypeModel> AnimalTypeModel { get; set; }
     }
 }
