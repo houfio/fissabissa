@@ -32,7 +32,7 @@ namespace FissaBissa.Data
                 .HasForeignKey(a => a.AccessoryId);
 
             modelBuilder.Entity<AnimalReservationModel>()
-                .HasKey(t => new { t.AnimalId, t.Reservation });
+                .HasKey(t => new { t.AnimalId, t.ReservationId });
 
             modelBuilder.Entity<AnimalReservationModel>()
                 .HasOne(ar => ar.Animal)
@@ -45,7 +45,7 @@ namespace FissaBissa.Data
                 .HasForeignKey(ar => ar.ReservationId);
 
             modelBuilder.Entity<AccessoryReservationModel>()
-                .HasKey(t => new { t.AccessoryId, t.Reservation });
+                .HasKey(t => new { t.AccessoryId, t.ReservationId });
 
             modelBuilder.Entity<AccessoryReservationModel>()
                 .HasOne(ar => ar.Accessory)
