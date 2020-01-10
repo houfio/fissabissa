@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace FissaBissa.Models
+namespace FissaBissa.Entities
 {
-    public class ReservationModel
+    public class ReservationEntity
     {
         public int Id { get; set; }
         [Required] public DateTime Date { get; set; }
@@ -13,7 +13,7 @@ namespace FissaBissa.Models
         public string Email { get; set; }
         public string Telephone { get; set; }
 
-        public virtual List<AnimalReservationModel> Animals { get; set; }
-        public virtual List<AccessoryReservationModel> Accessories { get; set; }
+        public virtual List<AnimalReservationEntity> Animals { get; set; }
+        public virtual List<AccessoryReservationEntity> Accessories { get; set; }
     }
 }

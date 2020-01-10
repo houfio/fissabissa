@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace FissaBissa.Models
 {
     public class AnimalModel
     {
         public int Id { get; set; }
-        [Required] public string Name { get; set; }
-        [Required] public int TypeId { get; set; }
-        [Required] public float Price { get; set; }
-        [Required] public byte[] Image { get; set; }
 
-        public virtual AnimalTypeModel Type { get; set; }
-        public virtual List<AnimalAccessoryModel> Accessories { get; set; }
-        public virtual List<AnimalReservationModel> Reservations { get; set; }
+        [Required, StringLength(255, MinimumLength = 3)]
+        public string Name { get; set; }
+
+        [Required, Display(Name = "Type")] public int TypeId { get; set; }
+        [Required, Range(0, 10000)] public float Price { get; set; }
+        [Required, FileExtensions] public IFormFile Image { get; set; }
     }
 }

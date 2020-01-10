@@ -61,7 +61,7 @@ namespace FissaBissa.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     TypeId = table.Column<int>(nullable: false),
                     Price = table.Column<float>(nullable: false),
-                    Image = table.Column<byte[]>(nullable: false)
+                    Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +75,7 @@ namespace FissaBissa.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccessoryReservationModel",
+                name: "AccessoryReservationEntity",
                 columns: table => new
                 {
                     AccessoryId = table.Column<int>(nullable: false),
@@ -99,7 +99,7 @@ namespace FissaBissa.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnimalAccessoryModel",
+                name: "AnimalAccessoryEntity",
                 columns: table => new
                 {
                     AnimalId = table.Column<int>(nullable: false),
@@ -123,7 +123,7 @@ namespace FissaBissa.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnimalReservationModel",
+                name: "AnimalReservationEntity",
                 columns: table => new
                 {
                     AnimalId = table.Column<int>(nullable: false),
@@ -148,17 +148,17 @@ namespace FissaBissa.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccessoryReservationModel_ReservationId",
-                table: "AccessoryReservationModel",
+                table: "AccessoryReservationEntity",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnimalAccessoryModel_AccessoryId",
-                table: "AnimalAccessoryModel",
+                table: "AnimalAccessoryEntity",
                 column: "AccessoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnimalReservationModel_ReservationId",
-                table: "AnimalReservationModel",
+                table: "AnimalReservationEntity",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
@@ -170,13 +170,13 @@ namespace FissaBissa.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccessoryReservationModel");
+                name: "AccessoryReservationEntity");
 
             migrationBuilder.DropTable(
-                name: "AnimalAccessoryModel");
+                name: "AnimalAccessoryEntity");
 
             migrationBuilder.DropTable(
-                name: "AnimalReservationModel");
+                name: "AnimalReservationEntity");
 
             migrationBuilder.DropTable(
                 name: "Accessories");

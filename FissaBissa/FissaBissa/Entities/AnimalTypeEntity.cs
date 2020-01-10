@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FissaBissa.Models
+namespace FissaBissa.Entities
 {
-    public class AnimalTypeModel
+    public class AnimalTypeEntity
     {
         public int Id { get; set; }
         [Required] public string Name { get; set; }

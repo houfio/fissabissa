@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using FissaBissa.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Localization;
 using System;
+using FissaBissa.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace FissaBissa.Controllers

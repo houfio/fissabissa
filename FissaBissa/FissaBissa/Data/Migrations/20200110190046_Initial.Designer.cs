@@ -21,7 +21,7 @@ namespace FissaBissa.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("FissaBissa.Models.AccessoryModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AccessoryEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +44,7 @@ namespace FissaBissa.Data.Migrations
                     b.ToTable("Accessories");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AccessoryReservationModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AccessoryReservationEntity", b =>
                 {
                     b.Property<int>("AccessoryId")
                         .HasColumnType("int");
@@ -56,10 +56,10 @@ namespace FissaBissa.Data.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("AccessoryReservationModel");
+                    b.ToTable("AccessoryReservationEntity");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalAccessoryModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalAccessoryEntity", b =>
                 {
                     b.Property<int>("AnimalId")
                         .HasColumnType("int");
@@ -71,10 +71,10 @@ namespace FissaBissa.Data.Migrations
 
                     b.HasIndex("AccessoryId");
 
-                    b.ToTable("AnimalAccessoryModel");
+                    b.ToTable("AnimalAccessoryEntity");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -102,7 +102,7 @@ namespace FissaBissa.Data.Migrations
                     b.ToTable("Animals");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalReservationModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalReservationEntity", b =>
                 {
                     b.Property<int>("AnimalId")
                         .HasColumnType("int");
@@ -114,10 +114,10 @@ namespace FissaBissa.Data.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("AnimalReservationModel");
+                    b.ToTable("AnimalReservationEntity");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalTypeModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalTypeEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,7 +133,7 @@ namespace FissaBissa.Data.Migrations
                     b.ToTable("AnimalTypes");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.ReservationModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.ReservationEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,54 +362,54 @@ namespace FissaBissa.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AccessoryReservationModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AccessoryReservationEntity", b =>
                 {
-                    b.HasOne("FissaBissa.Models.AccessoryModel", "Accessory")
+                    b.HasOne("FissaBissa.Entities.AccessoryEntity", "Accessory")
                         .WithMany("Reservations")
                         .HasForeignKey("AccessoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FissaBissa.Models.ReservationModel", "Reservation")
+                    b.HasOne("FissaBissa.Entities.ReservationEntity", "Reservation")
                         .WithMany("Accessories")
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalAccessoryModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalAccessoryEntity", b =>
                 {
-                    b.HasOne("FissaBissa.Models.AccessoryModel", "Accessory")
+                    b.HasOne("FissaBissa.Entities.AccessoryEntity", "Accessory")
                         .WithMany("Animals")
                         .HasForeignKey("AccessoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FissaBissa.Models.AnimalModel", "Animal")
+                    b.HasOne("FissaBissa.Entities.AnimalEntity", "Animal")
                         .WithMany("Accessories")
                         .HasForeignKey("AnimalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalEntity", b =>
                 {
-                    b.HasOne("FissaBissa.Models.AnimalTypeModel", "Type")
+                    b.HasOne("FissaBissa.Entities.AnimalTypeEntity", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("FissaBissa.Models.AnimalReservationModel", b =>
+            modelBuilder.Entity("FissaBissa.Entities.AnimalReservationEntity", b =>
                 {
-                    b.HasOne("FissaBissa.Models.AnimalModel", "Animal")
+                    b.HasOne("FissaBissa.Entities.AnimalEntity", "Animal")
                         .WithMany("Reservations")
                         .HasForeignKey("AnimalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FissaBissa.Models.ReservationModel", "Reservation")
+                    b.HasOne("FissaBissa.Entities.ReservationEntity", "Reservation")
                         .WithMany("Animals")
                         .HasForeignKey("ReservationId")
                         .OnDelete(DeleteBehavior.Cascade)

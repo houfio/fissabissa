@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FissaBissa.Data;
 using FissaBissa.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace FissaBissa.Controllers
 {
@@ -53,11 +51,11 @@ namespace FissaBissa.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price")] AnimalModel model)
+        public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(model);
+                // _context.Add(entity);
 
                 await _context.SaveChangesAsync();
 
@@ -86,7 +84,7 @@ namespace FissaBissa.Controllers
 
             ViewData["TypeId"] = new SelectList(_context.AnimalTypes, "Id", "Name", model.TypeId);
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
@@ -102,7 +100,7 @@ namespace FissaBissa.Controllers
             {
                 try
                 {
-                    _context.Update(model);
+                    // _context.Update(entity);
 
                     await _context.SaveChangesAsync();
                 }

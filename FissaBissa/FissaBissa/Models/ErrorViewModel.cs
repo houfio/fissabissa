@@ -1,4 +1,4 @@
-namespace FissaBissa.ViewModels
+namespace FissaBissa.Models
 {
     public class ErrorViewModel
     {
