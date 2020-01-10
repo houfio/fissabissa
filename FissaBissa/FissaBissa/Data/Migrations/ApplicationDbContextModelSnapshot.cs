@@ -79,9 +79,9 @@ namespace FissaBissa.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Image")
+                    b.Property<byte[]>("Image")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -128,7 +128,7 @@ namespace FissaBissa.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AnimalTypeModel");
+                    b.ToTable("AnimalTypes");
                 });
 
             modelBuilder.Entity("FissaBissa.Models.ReservationModel", b =>

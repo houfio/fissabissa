@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using FissaBissa.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using FissaBissa.Models;
 using Microsoft.Extensions.Localization;
 using Microsoft.AspNetCore.Localization;
 using System;
@@ -12,22 +10,14 @@ namespace FissaBissa.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IStringLocalizer<HomeController> _localizer;
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<HomeController> localizer)
+        public HomeController(IStringLocalizer<HomeController> localizer)
         {
-            _logger = logger;
             _localizer = localizer;
         }
 
         public IActionResult Index()
-        {
-            ViewData["Welcome"] = _localizer["Welcome"];
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
@@ -38,7 +28,7 @@ namespace FissaBissa.Controllers
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
-                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+                new CookieOptions {Expires = DateTimeOffset.UtcNow.AddYears(1)}
             );
 
             return LocalRedirect(returnUrl);
@@ -47,7 +37,10 @@ namespace FissaBissa.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
     }
 }

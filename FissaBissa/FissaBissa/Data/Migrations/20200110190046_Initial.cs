@@ -13,9 +13,9 @@ namespace FissaBissa.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     Price = table.Column<float>(nullable: false),
-                    Image = table.Column<string>(nullable: true)
+                    Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -23,16 +23,16 @@ namespace FissaBissa.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnimalTypeModel",
+                name: "AnimalTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnimalTypeModel", x => x.Id);
+                    table.PrimaryKey("PK_AnimalTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -42,8 +42,8 @@ namespace FissaBissa.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Address = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Telephone = table.Column<string>(nullable: true)
                 },
@@ -58,18 +58,18 @@ namespace FissaBissa.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     TypeId = table.Column<int>(nullable: false),
                     Price = table.Column<float>(nullable: false),
-                    Image = table.Column<string>(nullable: true)
+                    Image = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Animals_AnimalTypeModel_TypeId",
+                        name: "FK_Animals_AnimalTypes_TypeId",
                         column: x => x.TypeId,
-                        principalTable: "AnimalTypeModel",
+                        principalTable: "AnimalTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -188,7 +188,7 @@ namespace FissaBissa.Data.Migrations
                 name: "Reservations");
 
             migrationBuilder.DropTable(
-                name: "AnimalTypeModel");
+                name: "AnimalTypes");
         }
     }
 }

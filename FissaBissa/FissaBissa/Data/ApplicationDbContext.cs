@@ -8,6 +8,7 @@ namespace FissaBissa.Data
     {
         public DbSet<AccessoryModel> Accessories { get; set; }
         public DbSet<AnimalModel> Animals { get; set; }
+        public DbSet<AnimalTypeModel> AnimalTypes { get; set; }
         public DbSet<ReservationModel> Reservations { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -19,7 +20,7 @@ namespace FissaBissa.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AnimalAccessoryModel>()
-                .HasKey(t => new { t.AnimalId, t.AccessoryId });
+                .HasKey(t => new {t.AnimalId, t.AccessoryId});
 
             modelBuilder.Entity<AnimalAccessoryModel>()
                 .HasOne(aa => aa.Animal)
@@ -32,7 +33,7 @@ namespace FissaBissa.Data
                 .HasForeignKey(a => a.AccessoryId);
 
             modelBuilder.Entity<AnimalReservationModel>()
-                .HasKey(t => new { t.AnimalId, t.ReservationId });
+                .HasKey(t => new {t.AnimalId, t.ReservationId});
 
             modelBuilder.Entity<AnimalReservationModel>()
                 .HasOne(ar => ar.Animal)
@@ -45,7 +46,7 @@ namespace FissaBissa.Data
                 .HasForeignKey(ar => ar.ReservationId);
 
             modelBuilder.Entity<AccessoryReservationModel>()
-                .HasKey(t => new { t.AccessoryId, t.ReservationId });
+                .HasKey(t => new {t.AccessoryId, t.ReservationId});
 
             modelBuilder.Entity<AccessoryReservationModel>()
                 .HasOne(ar => ar.Accessory)
@@ -57,7 +58,5 @@ namespace FissaBissa.Data
                 .WithMany(r => r.Accessories)
                 .HasForeignKey(ar => ar.ReservationId);
         }
-
-        public DbSet<FissaBissa.Models.AnimalTypeModel> AnimalTypeModel { get; set; }
     }
 }

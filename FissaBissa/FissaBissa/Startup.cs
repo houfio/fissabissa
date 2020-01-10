@@ -29,15 +29,17 @@ namespace FissaBissa
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 var supportedCultures = new List<CultureInfo>
-                    {
-                        new CultureInfo("nl"),
-                        new CultureInfo("en")
-                    };
+                {
+                    new CultureInfo("nl"),
+                    new CultureInfo("en")
+                };
 
                 options.DefaultRequestCulture = new RequestCulture("en");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
+
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -75,7 +77,7 @@ namespace FissaBissa
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }
