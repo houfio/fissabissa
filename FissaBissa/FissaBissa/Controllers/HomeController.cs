@@ -17,6 +17,7 @@ namespace FissaBissa.Controllers
             _localizer = localizer;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

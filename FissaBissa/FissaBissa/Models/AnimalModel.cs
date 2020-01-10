@@ -12,6 +12,6 @@ namespace FissaBissa.Models
 
         [Required, Display(Name = "Type")] public int TypeId { get; set; }
         [Required, Range(0, 10000)] public float Price { get; set; }
-        [Required, FileExtensions] public IFormFile Image { get; set; }
+        [Required] public IFormFile Image { get; set; }
     }
 }

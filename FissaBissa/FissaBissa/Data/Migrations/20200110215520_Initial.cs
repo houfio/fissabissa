@@ -83,15 +83,15 @@ namespace FissaBissa.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccessoryReservationModel", x => new { x.AccessoryId, x.ReservationId });
+                    table.PrimaryKey("PK_AccessoryReservationEntity", x => new { x.AccessoryId, x.ReservationId });
                     table.ForeignKey(
-                        name: "FK_AccessoryReservationModel_Accessories_AccessoryId",
+                        name: "FK_AccessoryReservationEntity_Accessories_AccessoryId",
                         column: x => x.AccessoryId,
                         principalTable: "Accessories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccessoryReservationModel_Reservations_ReservationId",
+                        name: "FK_AccessoryReservationEntity_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id",
@@ -107,15 +107,15 @@ namespace FissaBissa.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnimalAccessoryModel", x => new { x.AnimalId, x.AccessoryId });
+                    table.PrimaryKey("PK_AnimalAccessoryEntity", x => new { x.AnimalId, x.AccessoryId });
                     table.ForeignKey(
-                        name: "FK_AnimalAccessoryModel_Accessories_AccessoryId",
+                        name: "FK_AnimalAccessoryEntity_Accessories_AccessoryId",
                         column: x => x.AccessoryId,
                         principalTable: "Accessories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnimalAccessoryModel_Animals_AnimalId",
+                        name: "FK_AnimalAccessoryEntity_Animals_AnimalId",
                         column: x => x.AnimalId,
                         principalTable: "Animals",
                         principalColumn: "Id",
@@ -131,15 +131,15 @@ namespace FissaBissa.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnimalReservationModel", x => new { x.AnimalId, x.ReservationId });
+                    table.PrimaryKey("PK_AnimalReservationEntity", x => new { x.AnimalId, x.ReservationId });
                     table.ForeignKey(
-                        name: "FK_AnimalReservationModel_Animals_AnimalId",
+                        name: "FK_AnimalReservationEntity_Animals_AnimalId",
                         column: x => x.AnimalId,
                         principalTable: "Animals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnimalReservationModel_Reservations_ReservationId",
+                        name: "FK_AnimalReservationEntity_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id",
@@ -147,17 +147,17 @@ namespace FissaBissa.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccessoryReservationModel_ReservationId",
+                name: "IX_AccessoryReservationEntity_ReservationId",
                 table: "AccessoryReservationEntity",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnimalAccessoryModel_AccessoryId",
+                name: "IX_AnimalAccessoryEntity_AccessoryId",
                 table: "AnimalAccessoryEntity",
                 column: "AccessoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnimalReservationModel_ReservationId",
+                name: "IX_AnimalReservationEntity_ReservationId",
                 table: "AnimalReservationEntity",
                 column: "ReservationId");
 

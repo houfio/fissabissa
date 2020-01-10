@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FissaBissa.Models;
+using FissaBissa.Utilities;
 
 namespace FissaBissa.Entities
 {
-    public class AnimalEntity
+    public class AnimalEntity : ITransformer<AnimalModel>
     {
         public int Id { get; set; }
         [Required] public string Name { get; set; }
@@ -14,5 +16,23 @@ namespace FissaBissa.Entities
         public virtual AnimalTypeEntity Type { get; set; }
         public virtual List<AnimalAccessoryEntity> Accessories { get; set; }
         public virtual List<AnimalReservationEntity> Reservations { get; set; }
+
+        public AnimalModel Transform()
+        {
+            return new AnimalModel
+            {
+                Id = Id,
+                Name = Name,
+                TypeId = TypeId,
+                Price = Price
+            };
+        }
+
+        public void Copy(AnimalModel data, bool create)
+        {
+            Name = data.Name;
+            TypeId = data.TypeId;
+            Price = data.Price;
+        }
     }
 }

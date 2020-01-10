@@ -1,9 +1,9 @@
-/node_modules/
-TestResults
+node_modules/
+bin/
+obj/
+packages/
+uploads/
+.vs/
 *.suo
 *.user
-.vs
 _ReSharper.*
-bin
-obj
-packages

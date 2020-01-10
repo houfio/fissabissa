@@ -4,15 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FissaBissa.Data;
+using FissaBissa.Entities;
 using FissaBissa.Models;
+using FissaBissa.Utilities;
 
 namespace FissaBissa.Controllers
 {
-    public class AnimalController : Controller
+    public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AnimalController(ApplicationDbContext context)
+        public AnimalsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -53,9 +55,16 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
         {
+            var path = await FileUtilities.StoreImage(nameof(model.Image), model.Image, ModelState);
+
             if (ModelState.IsValid)
             {
-                // _context.Add(entity);
+                var entity = new AnimalEntity();
+
+                entity.Copy(model, true);
+                entity.Image = path;
+                
+                _context.Add(entity);
 
                 await _context.SaveChangesAsync();
 
@@ -68,7 +77,7 @@ namespace FissaBissa.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Update(int? id)
         {
             if (id == null)
             {
@@ -84,23 +93,30 @@ namespace FissaBissa.Controllers
 
             ViewData["TypeId"] = new SelectList(_context.AnimalTypes, "Id", "Name", model.TypeId);
 
-            return View();
+            return View(model.Transform());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
+        public async Task<IActionResult> Update(int id, [Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
         {
             if (id != model.Id)
             {
                 return NotFound();
             }
 
+            var path = await FileUtilities.StoreImage(nameof(model.Image), model.Image, ModelState);
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // _context.Update(entity);
+                    var entity = await _context.Animals.FindAsync(model.Id);
+
+                    entity.Copy(model, false);
+                    entity.Image = path;
+
+                    _context.Update(entity);
 
                     await _context.SaveChangesAsync();
                 }
