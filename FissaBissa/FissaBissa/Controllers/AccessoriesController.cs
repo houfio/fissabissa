@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using FissaBissa.Data;
 using FissaBissa.Entities;
 using FissaBissa.Models;
-using FissaBissa.Repositories;
 using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,6 @@ namespace FissaBissa.Controllers
 {
     public class AccessoriesController : Controller
     {
-
         private readonly ApplicationDbContext _context;
 
         public AccessoriesController(ApplicationDbContext context)
