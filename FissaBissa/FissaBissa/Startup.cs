@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Collections.Generic;
 using System.Globalization;
+using FissaBissa.Repositories;
 using Microsoft.AspNetCore.Localization;
 
 namespace FissaBissa
@@ -49,10 +50,12 @@ namespace FissaBissa
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<IAnimalRepository, AnimalRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

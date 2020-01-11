@@ -57,6 +57,13 @@ namespace FissaBissa.Data
                 .HasOne(ar => ar.Reservation)
                 .WithMany(r => r.Accessories)
                 .HasForeignKey(ar => ar.ReservationId);
+
+            modelBuilder.Entity<AnimalTypeEntity>().HasData(
+                new AnimalTypeEntity { Id = 1, Name = "Jungle" },
+                new AnimalTypeEntity { Id = 2, Name = "Boerderij" },
+                new AnimalTypeEntity { Id = 3, Name = "Sneeuw" },
+                new AnimalTypeEntity { Id = 4, Name = "Woestijn" }
+            );
         }
     }
 }
