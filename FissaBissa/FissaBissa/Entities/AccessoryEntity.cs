@@ -1,4 +1,5 @@
-﻿using FissaBissa.Models;
+﻿using System;
+using FissaBissa.Models;
 using FissaBissa.Utilities;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ namespace FissaBissa.Entities
 {
     public class AccessoryEntity : ITransformer<AccessoryModel>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required] public string Name { get; set; }
         [Required] public float Price { get; set; }
         [Required] public string Image { get; set; }

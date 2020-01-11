@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FissaBissa.Models;
 using FissaBissa.Utilities;
@@ -7,7 +8,7 @@ namespace FissaBissa.Entities
 {
     public class AnimalEntity : ITransformer<AnimalModel>
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required] public string Name { get; set; }
         [Required] public int TypeId { get; set; }
         [Required] public float Price { get; set; }

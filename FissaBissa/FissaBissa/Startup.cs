@@ -9,7 +9,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Collections.Generic;
 using System.Globalization;
+using FissaBissa.Entities;
 using FissaBissa.Repositories;
+using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Localization;
 
 namespace FissaBissa
@@ -50,15 +52,17 @@ namespace FissaBissa
                 .UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<UserEntity>()
+                .AddRoles<RoleEntity>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
 
             services.AddScoped<IAnimalRepository, AnimalRepository>();
+            services.AddScoped<IAccessoryRepository, AccessoryRepository>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<RoleEntity> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -83,6 +87,8 @@ namespace FissaBissa
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            IdentitySeeder.Seed(roleManager);
         }
     }
 }

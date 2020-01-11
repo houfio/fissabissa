@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,9 +8,11 @@ using FissaBissa.Data;
 using FissaBissa.Entities;
 using FissaBissa.Models;
 using FissaBissa.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FissaBissa.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +29,7 @@ namespace FissaBissa.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
             {
@@ -63,7 +66,7 @@ namespace FissaBissa.Controllers
 
                 entity.Copy(model, true);
                 entity.Image = path;
-                
+
                 _context.Add(entity);
 
                 await _context.SaveChangesAsync();
@@ -77,7 +80,7 @@ namespace FissaBissa.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(int? id)
+        public async Task<IActionResult> Update(Guid? id)
         {
             if (id == null)
             {
@@ -98,7 +101,7 @@ namespace FissaBissa.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(int id, [Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
+        public async Task<IActionResult> Update(Guid id, [Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
         {
             if (id != model.Id)
             {
@@ -139,7 +142,7 @@ namespace FissaBissa.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)
             {
@@ -158,7 +161,7 @@ namespace FissaBissa.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var model = await _context.Animals.FindAsync(id);
 

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using FissaBissa.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,9 +15,9 @@ namespace FissaBissa.Areas.Identity.Pages.Account
         [TempData] public string ErrorMessage { get; set; }
         public string ReturnUrl { get; set; }
 
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<UserEntity> _signInManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager)
+        public LoginModel(SignInManager<UserEntity> signInManager)
         {
             _signInManager = signInManager;
         }

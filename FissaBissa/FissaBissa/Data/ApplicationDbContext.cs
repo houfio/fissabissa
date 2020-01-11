@@ -1,10 +1,11 @@
-﻿using FissaBissa.Entities;
+﻿using System;
+using FissaBissa.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace FissaBissa.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<UserEntity, RoleEntity, Guid>
     {
         public DbSet<AccessoryEntity> Accessories { get; set; }
         public DbSet<AnimalEntity> Animals { get; set; }
@@ -59,10 +60,10 @@ namespace FissaBissa.Data
                 .HasForeignKey(ar => ar.ReservationId);
 
             modelBuilder.Entity<AnimalTypeEntity>().HasData(
-                new AnimalTypeEntity { Id = 1, Name = "Jungle" },
-                new AnimalTypeEntity { Id = 2, Name = "Boerderij" },
-                new AnimalTypeEntity { Id = 3, Name = "Sneeuw" },
-                new AnimalTypeEntity { Id = 4, Name = "Woestijn" }
+                new AnimalTypeEntity {Id = Guid.NewGuid(), Name = "Jungle"},
+                new AnimalTypeEntity {Id = Guid.NewGuid(), Name = "Boerderij"},
+                new AnimalTypeEntity {Id = Guid.NewGuid(), Name = "Sneeuw"},
+                new AnimalTypeEntity {Id = Guid.NewGuid(), Name = "Woestijn"}
             );
         }
     }

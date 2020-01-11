@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using FissaBissa.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,10 @@ namespace FissaBissa.Areas.Identity.Pages.Account
         [BindProperty] public RegisterInputModel Input { get; set; }
         public string ReturnUrl { get; set; }
 
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public RegisterModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public RegisterModel(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -33,23 +34,38 @@ namespace FissaBissa.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser
+                var user = new UserEntity
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
                     EmailConfirmed = true
                 };
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var createResult = await _userManager.CreateAsync(user, Input.Password);
 
-                if (result.Succeeded)
+                if (createResult.Succeeded)
                 {
+                    if (Input.Admin)
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(user, "Admin");
+
+                        if (!roleResult.Succeeded)
+                        {
+                            foreach (var error in roleResult.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.Description);
+                            }
+
+                            return Page();
+                        }
+                    }
+
                     await _signInManager.SignInAsync(user, false);
 
                     return LocalRedirect(returnUrl);
                 }
 
-                foreach (var error in result.Errors)
+                foreach (var error in createResult.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
@@ -72,5 +88,7 @@ namespace FissaBissa.Areas.Identity.Pages.Account
         [DataType(DataType.Password), Display(Name = "Confirm password"),
          Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Administrator")] public bool Admin { get; set; }
     }
 }

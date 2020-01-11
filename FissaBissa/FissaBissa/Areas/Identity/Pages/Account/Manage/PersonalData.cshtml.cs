@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FissaBissa.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,9 +8,9 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public PersonalDataModel(UserManager<IdentityUser> userManager)
+        public PersonalDataModel(UserManager<UserEntity> userManager)
         {
             _userManager = userManager;
         }

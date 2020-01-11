@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FissaBissa.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,9 +12,9 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 {
     public class DownloadPersonalDataModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public DownloadPersonalDataModel(UserManager<IdentityUser> userManager)
+        public DownloadPersonalDataModel(UserManager<UserEntity> userManager)
         {
             _userManager = userManager;
         }

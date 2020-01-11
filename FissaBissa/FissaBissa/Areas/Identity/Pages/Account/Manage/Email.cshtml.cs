@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using FissaBissa.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,16 +13,14 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
         [TempData] public string StatusMessage { get; set; }
         public string Email { get; set; }
 
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public EmailModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public EmailModel(UserManager<UserEntity> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(UserEntity user)
         {
             Email = await _userManager.GetEmailAsync(user);
 
