@@ -20,7 +20,7 @@ namespace FissaBissa.Entities
         public string Email { get; set; }
         public string Telephone { get; set; }
 
-        public virtual List<AnimalReservationEntity> Animals { get; set; }
-        public virtual List<AccessoryReservationEntity> Accessories { get; set; }
+        public virtual ICollection<AnimalReservationEntity> Animals { get; set; }
+        public virtual ICollection<AccessoryReservationEntity> Accessories { get; set; }
     }
 }

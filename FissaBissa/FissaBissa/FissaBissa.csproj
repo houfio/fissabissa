@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-FissaBissa-23DEA33F-C466-481A-843A-9DA505A359AC</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20200112092614_InitialSchema.cs" />
+    <Compile Remove="Migrations\20200112092614_InitialSchema.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />

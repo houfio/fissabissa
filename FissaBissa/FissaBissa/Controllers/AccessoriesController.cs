@@ -1,30 +1,29 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using FissaBissa.Data;
 using FissaBissa.Entities;
 using FissaBissa.Models;
+using FissaBissa.Repositories;
 using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace FissaBissa.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class AccessoriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAccessoryRepository _accessoryRepo;
 
-        public AccessoriesController(ApplicationDbContext context)
+        public AccessoriesController(IAccessoryRepository accessoryRepo)
         {
-            _context = context;
+            _accessoryRepo = accessoryRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Accessories.ToListAsync());
+            return View(await _accessoryRepo.Get());
         }
 
         [HttpGet]
@@ -35,14 +34,14 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Accessories.FindAsync(id);
+            var entity = await _accessoryRepo.Get(id.Value);
 
-            if (model == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            return View(entity);
         }
 
         [HttpGet]
@@ -59,14 +58,7 @@ namespace FissaBissa.Controllers
 
             if (ModelState.IsValid)
             {
-                var entity = new AccessoryEntity();
-
-                entity.Copy(model, true);
-                entity.Image = path;
-
-                _context.Add(entity);
-
-                await _context.SaveChangesAsync();
+                await _accessoryRepo.Create(model, path);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -82,14 +74,14 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Accessories.FindAsync(id);
+            var entity = await _accessoryRepo.Get(id.Value);
 
-            if (model == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return View(model.Transform());
+            return View(entity.Transform());
         }
 
         [HttpPost]
@@ -105,26 +97,7 @@ namespace FissaBissa.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    var entity = await _context.Accessories.FindAsync(model.Id);
-
-                    entity.Copy(model, false);
-                    entity.Image = path;
-
-                    _context.Update(entity);
-
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Accessories.Any(e => e.Id == model.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
+                await _accessoryRepo.Update(model, path);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -140,25 +113,21 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Accessories.FindAsync(id);
+            var entity = await _accessoryRepo.Get(id.Value);
 
-            if (model == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            return View(entity);
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var model = await _context.Accessories.FindAsync(id);
-
-            _context.Accessories.Remove(model);
-
-            await _context.SaveChangesAsync();
+            await _accessoryRepo.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }
