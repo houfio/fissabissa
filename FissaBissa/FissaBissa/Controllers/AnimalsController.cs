@@ -9,6 +9,7 @@ using FissaBissa.Entities;
 using FissaBissa.Models;
 using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Authorization;
+using FissaBissa.Repositories;
 
 namespace FissaBissa.Controllers
 {
@@ -16,16 +17,18 @@ namespace FissaBissa.Controllers
     public class AnimalsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IAnimalRepository _AnimalRepo;
 
-        public AnimalsController(ApplicationDbContext context)
+        public AnimalsController(ApplicationDbContext context, IAnimalRepository AnimalRepo)
         {
             _context = context;
+            _AnimalRepo = AnimalRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Animals.ToListAsync());
+            return View(await _AnimalRepo.Get());
         }
 
         [HttpGet]
@@ -36,7 +39,7 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Animals.FindAsync(id);
+            var model = await _AnimalRepo.Get(id);
 
             if (model == null)
             {
@@ -58,18 +61,13 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
         {
+
             var path = await FileUtilities.StoreImage(nameof(model.Image), model.Image, ModelState);
 
             if (ModelState.IsValid)
             {
-                var entity = new AnimalEntity();
 
-                entity.Copy(model, true);
-                entity.Image = path;
-
-                _context.Add(entity);
-
-                await _context.SaveChangesAsync();
+                await Task.Run(() => _AnimalRepo.Create(model, path));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -87,7 +85,7 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Animals.FindAsync(id);
+            var model = await _AnimalRepo.Get(id);
 
             if (model == null)
             {
@@ -114,14 +112,7 @@ namespace FissaBissa.Controllers
             {
                 try
                 {
-                    var entity = await _context.Animals.FindAsync(model.Id);
-
-                    entity.Copy(model, false);
-                    entity.Image = path;
-
-                    _context.Update(entity);
-
-                    await _context.SaveChangesAsync();
+                    await Task.Run(() => _AnimalRepo.Update(model, path));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,7 +140,7 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _context.Animals.FindAsync(id);
+            var model = await _AnimalRepo.Get(id);
 
             if (model == null)
             {
@@ -163,11 +154,7 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var model = await _context.Animals.FindAsync(id);
-
-            _context.Animals.Remove(model);
-
-            await _context.SaveChangesAsync();
+            await Task.Run(() => _AnimalRepo.DeleteConfirmed(id));
 
             return RedirectToAction(nameof(Index));
         }
