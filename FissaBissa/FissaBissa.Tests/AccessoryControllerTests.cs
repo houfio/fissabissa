@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using FissaBissa.Entities;
-using FissaBissa.Models;
+
 namespace FissaBissa.Tests
 {
     public class AccessoryControllerTests
@@ -17,10 +17,9 @@ namespace FissaBissa.Tests
         public async Task Index_ReturnsAViewResult_WithAListOfAccessories()
         {
             // Arrange
-            var mockAnimalRepo = new Mock<IAccessoryRepository>();
-            mockAnimalRepo.Setup(repo => repo.Get())
-                .Returns(GetTestAccessories());
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
+            mockAccessoryRepo.Setup(repo => repo.Get())
+                .Returns(GetTestAccessories());
             var controller = new AccessoriesController(mockAccessoryRepo.Object);
 
             // Act
@@ -39,16 +38,16 @@ namespace FissaBissa.Tests
                 new AccessoryEntity()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "halsband",
+                    Name = "Halsband",
                     Price = 500,
                 },
                 new AccessoryEntity()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "ketting",
+                    Name = "Ketting",
                     Price = 500,
                 },
-            } as ICollection<AccessoryEntity>); ;
+            } as ICollection<AccessoryEntity>);
         }
     }
 }

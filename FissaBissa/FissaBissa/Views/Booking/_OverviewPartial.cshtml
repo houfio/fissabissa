@@ -1,0 +1,31 @@
+﻿@model ReservationModel
+
+@inject IAnimalRepository AnimalRepository
+
+<div class="col-md-3">
+    <div class="card">
+        <div class="card-header">
+            Boeking
+        </div>
+        <div class="card-body">
+            Datum: @Html.DisplayFor(model => model.Date)
+            <hr class="my-4" />
+            Beestjes<br />
+            @if (Model.Animals == null || Model.Animals.Count == 0)
+            {
+                <span>
+                    Nog geen beestjes geselecteerd
+                </span>
+            }
+            else
+            {
+                @foreach (var animal in Model.Animals)
+                {
+                    var parsed = await AnimalRepository.Get(Guid.Parse(animal));
+
+                    @Html.DisplayFor(model => parsed.Name);<br />
+                }
+            }
+        </div>
+    </div>
+</div>

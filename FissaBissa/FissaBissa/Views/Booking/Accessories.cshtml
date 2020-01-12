@@ -1,0 +1,13 @@
+﻿@model ReservationModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Booking - Accessories</h1>
+
+<div class="row">
+    <div class="col-md-9">
+        @Html.DisplayFor(model => model.Animals)
+    </div>
+    <partial name="_OverviewPartial"/>
+</div>

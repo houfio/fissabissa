@@ -21,8 +21,7 @@ namespace FissaBissa.Tests
             var mockAnimalRepo = new Mock<IAnimalRepository>();
             mockAnimalRepo.Setup(repo => repo.Get())
                 .Returns(GetTestAnimals());
-            var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            var controller = new AnimalsController(mockAnimalRepo.Object, mockAccessoryRepo.Object);
+            var controller = new AnimalsController(mockAnimalRepo.Object, null);
 
             // Act
             var result = await controller.Index();
@@ -33,8 +32,6 @@ namespace FissaBissa.Tests
             Assert.Equal(2, model.Count());
         }
 
-      
-
         [Fact]
         public async Task Detail_ReturnsAViewResult_WithAnAnimal()
         {
@@ -42,8 +39,7 @@ namespace FissaBissa.Tests
             var mockAnimalRepo = new Mock<IAnimalRepository>();
             mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
                 .Returns(GetTestAnimal());
-            var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            var controller = new AnimalsController(mockAnimalRepo.Object, mockAccessoryRepo.Object);
+            var controller = new AnimalsController(mockAnimalRepo.Object, null);
 
             // Act
             var result = await controller.Details(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
@@ -54,15 +50,26 @@ namespace FissaBissa.Tests
             Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
         }
 
-       
+        [Fact]
+        public async Task Detail_ReturnsNotFound()
+        {
+            // Arrange
+            var controller = new AnimalsController(null, null);
+
+            // Act
+            var result = await controller.Details(null);
+
+            // Assert
+            Assert.IsType<NotFoundResult>(result);
+        }
 
         [Fact]
         public async Task Create_ReturnsAViewResult()
         {
             // Arrange
             var mockAnimalRepo = new Mock<IAnimalRepository>();
-            mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
-                .Returns(GetTestAnimal());
+            mockAnimalRepo.Setup(repo => repo.GetTypes())
+                .Returns(GetTestTypes());
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
             mockAccessoryRepo.Setup(repo => repo.Get())
                 .Returns(GetTestAccessories());
@@ -104,11 +111,10 @@ namespace FissaBissa.Tests
             var mockAnimalRepo = new Mock<IAnimalRepository>();
             mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
                 .Returns(GetTestAnimal());
-            var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            var controller = new AnimalsController(mockAnimalRepo.Object, mockAccessoryRepo.Object);
+            var controller = new AnimalsController(mockAnimalRepo.Object, null);
 
             // Act
-            var result = await controller.Delete((Guid?)Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Delete(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -169,6 +175,24 @@ namespace FissaBissa.Tests
                 }
             } as ICollection<AnimalEntity>);
         }
+
+        private Task<ICollection<AnimalTypeEntity>> GetTestTypes()
+        {
+            return Task.FromResult(new List<AnimalTypeEntity>()
+            {
+                new AnimalTypeEntity()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Woestijn"
+                },
+                new AnimalTypeEntity()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Strand"
+                }
+            } as ICollection<AnimalTypeEntity>);
+        }
+
         private Task<ICollection<AccessoryEntity>> GetTestAccessories()
         {
             return Task.FromResult(new List<AccessoryEntity>()
