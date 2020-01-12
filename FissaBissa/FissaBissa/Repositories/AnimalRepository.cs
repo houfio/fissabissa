@@ -14,7 +14,7 @@ namespace FissaBissa.Repositories
         Task<ICollection<AnimalEntity>> Get();
         Task<ICollection<AnimalTypeEntity>> GetTypes();
         Task<AnimalEntity> Get(Guid id);
-        Task Create(AnimalModel model, string path);
+        Task<AnimalEntity> Create(AnimalModel model, string path);
         Task Update(AnimalModel model, string path);
         Task Delete(Guid id);
     }
@@ -43,7 +43,7 @@ namespace FissaBissa.Repositories
             return await _context.Animals.FindAsync(id);
         }
 
-        public async Task Create(AnimalModel model, string path)
+        public async Task<AnimalEntity> Create(AnimalModel model, string path)
         {
             var entity = new AnimalEntity();
 
@@ -54,6 +54,8 @@ namespace FissaBissa.Repositories
             _context.Add(entity);
 
             await _context.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task Update(AnimalModel model, string path)

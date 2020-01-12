@@ -1,9 +1,9 @@
 ﻿@model ReservationModel
 
-@inject IAnimalRepository animalRepository
-@inject IAccessoryRepository accessoryRepository
+@inject IAnimalRepository _animalRepository
+@inject IAccessoryRepository _accessoryRepository
 
-<div class="col-md-3">
+<div class="col-md-3 mt-4 mt-md-0">
     <div class="card">
         <div class="card-header">
             Boeking
@@ -12,7 +12,7 @@
             Datum: @Html.DisplayFor(model => model.Date)
             <hr class="my-4"/>
             <span class="d-inline-block mb-1">Beestjes</span><br/>
-            @if (Model.Animals == null || Model.Animals.Count == 0)
+            @if (Model.Animals.Count == 0)
             {
                 <small>
                     Geen beestjes geselecteerd
@@ -23,7 +23,7 @@
                 <ul>
                     @foreach (var animal in Model.Animals)
                     {
-                        var parsed = await animalRepository.Get(animal);
+                        var parsed = await _animalRepository.Get(animal);
 
                         <li>
                             @Html.DisplayFor(model => parsed.Name)
@@ -33,7 +33,7 @@
             }
             <hr class="my-4"/>
             <span class="d-inline-block mb-1">Accessories</span><br/>
-            @if (Model.Accessories == null || Model.Accessories.Count == 0)
+            @if (Model.Accessories.Count == 0)
             {
                 <small>
                     Geen accessories geselecteerd
@@ -41,10 +41,10 @@
             }
             else
             {
-                <ul>
+                <ul class="mb-0">
                     @foreach (var accessory in Model.Accessories)
                     {
-                        var parsed = await accessoryRepository.Get(accessory);
+                        var parsed = await _accessoryRepository.Get(accessory);
 
                         <li>
                             @Html.DisplayFor(model => parsed.Name)

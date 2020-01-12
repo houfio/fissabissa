@@ -15,7 +15,7 @@
             <div class="card-body">
                 <form asp-action="Contact">
                     <input type="hidden" asp-for="Date"/>
-                    <input type="hidden" asp-for="Animals"/>
+                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>
                     @foreach (var accessory in accessories)
                     {
                         <div class="form-group" style="display: inline-block">

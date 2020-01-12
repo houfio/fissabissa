@@ -21,6 +21,7 @@ namespace FissaBissa.Entities
 
         public string Email { get; set; }
         public string Telephone { get; set; }
+        public string Price { get; set; }
 
         public virtual ICollection<AnimalReservationEntity> Animals { get; set; }
         public virtual ICollection<AccessoryReservationEntity> Accessories { get; set; }
@@ -33,6 +34,17 @@ namespace FissaBissa.Entities
         public void Copy(ReservationModel data, bool create)
         {
             Date = data.Date;
+            Name = data.FullName;
+            Address = data.Address;
+            Email = data.Email;
+            Telephone = data.PhoneNumber;
+            Price = data.Price;
+
+            if (create)
+            {
+                Animals = new List<AnimalReservationEntity>();
+                Accessories = new List<AccessoryReservationEntity>();
+            }
         }
     }
 }

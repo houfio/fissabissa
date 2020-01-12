@@ -7,11 +7,14 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
     public static class ManageNavPages
     {
         public static string Index => "Index";
+        public static string Reservations => "Reservations";
         public static string Email => "Email";
         public static string ChangePassword => "ChangePassword";
         public static string PersonalData => "PersonalData";
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
+
+        public static string ReservationsNavClass(ViewContext viewContext) => PageNavClass(viewContext, Reservations);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 

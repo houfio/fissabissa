@@ -4,14 +4,16 @@ using FissaBissa.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FissaBissa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200112184752_ReservationPrice")]
+    partial class ReservationPrice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,22 +132,22 @@ namespace FissaBissa.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("60e96b8b-14c8-4571-8c49-22508b182d98"),
+                            Id = new Guid("ddd4f17c-9ae3-4a34-85cc-2afd850cc5d0"),
                             Name = "Jungle"
                         },
                         new
                         {
-                            Id = new Guid("41122567-e787-4afd-aa8a-3fc2d1bf8470"),
+                            Id = new Guid("2db7f571-9383-41b2-a469-ffca10457665"),
                             Name = "Boerderij"
                         },
                         new
                         {
-                            Id = new Guid("317933b2-f771-4c5a-b09e-deabb8aa9d2a"),
+                            Id = new Guid("e84bad93-704b-42fb-9852-fb3e531a7ad1"),
                             Name = "Sneeuw"
                         },
                         new
                         {
-                            Id = new Guid("2e826575-7866-40f0-85ee-1ffc3dc479c2"),
+                            Id = new Guid("5f0761c4-d163-47de-9382-0c268be94373"),
                             Name = "Woestijn"
                         });
                 });

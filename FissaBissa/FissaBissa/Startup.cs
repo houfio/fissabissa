@@ -14,6 +14,7 @@ using FissaBissa.Entities;
 using FissaBissa.Repositories;
 using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Localization;
+using ServiceReference;
 
 namespace FissaBissa
 {
@@ -70,6 +71,7 @@ namespace FissaBissa
             services.AddScoped<IAnimalRepository, AnimalRepository>();
             services.AddScoped<IAccessoryRepository, AccessoryRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IService, ServiceClient>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<RoleEntity> roleManager)

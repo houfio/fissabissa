@@ -4,8 +4,11 @@ using System.Threading.Tasks;
 using FissaBissa.Entities;
 using FissaBissa.Models;
 using FissaBissa.Repositories;
+using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ServiceReference;
 
 namespace FissaBissa.Controllers
 {
@@ -15,14 +18,16 @@ namespace FissaBissa.Controllers
         private readonly IReservationRepository _reservationRepo;
         private readonly IAccessoryRepository _accessoryRepo;
         private readonly UserManager<UserEntity> _userManager;
+        private readonly IService _service;
 
         public BookingController(IAnimalRepository animalRepo, IReservationRepository reservationRepo,
-            IAccessoryRepository accessoryRepo, UserManager<UserEntity> userManager)
+            IAccessoryRepository accessoryRepo, UserManager<UserEntity> userManager, IService service)
         {
             _animalRepo = animalRepo;
             _reservationRepo = reservationRepo;
             _accessoryRepo = accessoryRepo;
             _userManager = userManager;
+            _service = service;
         }
 
         [HttpPost]
@@ -49,10 +54,11 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Accessories([Bind("Date,Animals")] ReservationModel model)
         {
-            if (model.Animals == null || model.Animals.Count == 0)
-            {
-                ModelState.AddModelError(nameof(model.Animals), "Must select at least one");
+            OrderValidator.ValidateOrder(nameof(model.Animals),
+                model.Animals.Select(i => _animalRepo.Get(i).Result).ToList(), model.Date, ModelState);
 
+            if (ModelState.GetFieldValidationState(nameof(model.Animals)) != ModelValidationState.Valid)
+            {
                 return await Index(model);
             }
 
@@ -77,7 +83,7 @@ namespace FissaBissa.Controllers
                 ModelState.Clear();
             }
 
-            return View(model);
+            return View(nameof(Contact), model);
         }
 
         [HttpPost]
@@ -85,7 +91,57 @@ namespace FissaBissa.Controllers
         public async Task<IActionResult> Confirm([Bind("Date,Animals,Accessories,FullName,Address,Email,PhoneNumber")]
             ReservationModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return await Contact(model);
+            }
+
+            var animals = model.Animals
+                .Select((a) => _animalRepo.Get(a).Result)
+                .ToList();
+            var accessories = model.Accessories
+                .Select(a => _accessoryRepo.Get(a).Result)
+                .ToList();
+            var discounts = await _service.GetDiscountAsync(new DataModel
+            {
+                Date = model.Date,
+                Animals = animals.Select((a) => new ServiceReference.AnimalModel
+                    {
+                        Name = a.Name,
+                        Type = a.Type.Name
+                    })
+                    .ToArray()
+            });
+            var discount = Math.Min(60, discounts.Values.Sum());
+            var price = animals.Select(a => a.Price).Sum() + accessories.Select(a => a.Price).Sum();
+
+            ViewData["Animals"] = animals.ToDictionary(a => a.Name, a => a.Price.ToString("F"));
+            ViewData["Accessories"] = accessories.ToDictionary(a => a.Name, a => a.Price.ToString("F"));
+            ViewData["Discounts"] = discounts;
+            ViewData["TotalPrice"] = (price * (1.0 - discount / 100.0)).ToString("F");
+
+            model.Price = ViewData["TotalPrice"] as string;
+
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Finish(
+            [Bind("Date,Animals,Accessories,FullName,Address,Email,PhoneNumber,Price")]
+            ReservationModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var entity = await _reservationRepo.Create(model);
+
+            return RedirectToAction("Details", "Reservations", new
+            {
+                id = entity.Id
+            });
         }
     }
 }
