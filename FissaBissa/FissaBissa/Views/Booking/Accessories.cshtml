@@ -18,7 +18,10 @@
             <div class="card-body">
                 <form asp-action="Contact">
                     <input type="hidden" asp-for="Date" />
-                    <input type="hidden" name="@Localizer["Animals"]" value="@string.Join(",", Model.Animals)" />
+                    @for (var i = 0; i < Model.Animals.Count; i++)
+                    {
+                        <input type="hidden" asp-for="Animals[i]" />
+                    }
                     @foreach (var accessory in accessories)
                     {
                         <div class="form-group" style="display: inline-block">

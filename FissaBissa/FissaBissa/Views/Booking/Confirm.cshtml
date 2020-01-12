@@ -60,10 +60,13 @@
                 </div>
                 <form asp-action="Finish">
                     <input type="hidden" asp-for="Date" />
-                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)" />
-                    @if (Model.Accessories.Count > 0)
+                    @for (var i = 0; i < Model.Animals.Count; i++)
                     {
-                        <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)" />
+                        <input type="hidden" asp-for="Animals[i]" />
+                    }
+                    @for (var i = 0; i < Model.Accessories.Count; i++)
+                    {
+                        <input type="hidden" asp-for="Accessories[i]" />
                     }
                     <input type="hidden" asp-for="FullName" />
                     <input type="hidden" asp-for="Address" />
