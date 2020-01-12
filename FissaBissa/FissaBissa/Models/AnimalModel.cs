@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
@@ -19,5 +20,7 @@ namespace FissaBissa.Models
 
         [Required]
         public IFormFile Image { get; set; }
+
+        public ICollection<Guid> Accessories { get; set; }
     }
 }

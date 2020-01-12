@@ -8,7 +8,10 @@ namespace FissaBissa.Data
     public class ApplicationDbContext : IdentityDbContext<UserEntity, RoleEntity, Guid>
     {
         public DbSet<AccessoryEntity> Accessories { get; set; }
+        public DbSet<AccessoryReservationEntity> AccessoryReservations { get; set; }
+        public DbSet<AnimalAccessoryEntity> AnimalAccessories { get; set; }
         public DbSet<AnimalEntity> Animals { get; set; }
+        public DbSet<AnimalReservationEntity> AnimalReservations { get; set; }
         public DbSet<AnimalTypeEntity> AnimalTypes { get; set; }
         public DbSet<ReservationEntity> Reservations { get; set; }
 

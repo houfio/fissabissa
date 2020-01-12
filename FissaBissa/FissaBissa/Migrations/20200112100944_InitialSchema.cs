@@ -218,7 +218,7 @@ namespace FissaBissa.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AccessoryReservationEntity",
+                name: "AccessoryReservations",
                 columns: table => new
                 {
                     AccessoryId = table.Column<Guid>(nullable: false),
@@ -226,15 +226,15 @@ namespace FissaBissa.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AccessoryReservationEntity", x => new { x.AccessoryId, x.ReservationId });
+                    table.PrimaryKey("PK_AccessoryReservations", x => new { x.AccessoryId, x.ReservationId });
                     table.ForeignKey(
-                        name: "FK_AccessoryReservationEntity_Accessories_AccessoryId",
+                        name: "FK_AccessoryReservations_Accessories_AccessoryId",
                         column: x => x.AccessoryId,
                         principalTable: "Accessories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AccessoryReservationEntity_Reservations_ReservationId",
+                        name: "FK_AccessoryReservations_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id",
@@ -242,7 +242,7 @@ namespace FissaBissa.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnimalAccessoryEntity",
+                name: "AnimalAccessories",
                 columns: table => new
                 {
                     AnimalId = table.Column<Guid>(nullable: false),
@@ -250,15 +250,15 @@ namespace FissaBissa.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnimalAccessoryEntity", x => new { x.AnimalId, x.AccessoryId });
+                    table.PrimaryKey("PK_AnimalAccessories", x => new { x.AnimalId, x.AccessoryId });
                     table.ForeignKey(
-                        name: "FK_AnimalAccessoryEntity_Accessories_AccessoryId",
+                        name: "FK_AnimalAccessories_Accessories_AccessoryId",
                         column: x => x.AccessoryId,
                         principalTable: "Accessories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnimalAccessoryEntity_Animals_AnimalId",
+                        name: "FK_AnimalAccessories_Animals_AnimalId",
                         column: x => x.AnimalId,
                         principalTable: "Animals",
                         principalColumn: "Id",
@@ -266,7 +266,7 @@ namespace FissaBissa.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AnimalReservationEntity",
+                name: "AnimalReservations",
                 columns: table => new
                 {
                     AnimalId = table.Column<Guid>(nullable: false),
@@ -274,15 +274,15 @@ namespace FissaBissa.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AnimalReservationEntity", x => new { x.AnimalId, x.ReservationId });
+                    table.PrimaryKey("PK_AnimalReservations", x => new { x.AnimalId, x.ReservationId });
                     table.ForeignKey(
-                        name: "FK_AnimalReservationEntity_Animals_AnimalId",
+                        name: "FK_AnimalReservations_Animals_AnimalId",
                         column: x => x.AnimalId,
                         principalTable: "Animals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnimalReservationEntity_Reservations_ReservationId",
+                        name: "FK_AnimalReservations_Reservations_ReservationId",
                         column: x => x.ReservationId,
                         principalTable: "Reservations",
                         principalColumn: "Id",
@@ -294,25 +294,25 @@ namespace FissaBissa.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("bf550047-1eed-479f-a691-bf7d4c22bf17"), "Jungle" },
-                    { new Guid("ad2c48ee-930a-428b-9b09-d2a23a7d9f4a"), "Boerderij" },
-                    { new Guid("83e184af-10f4-4959-8013-bab04b09d0d4"), "Sneeuw" },
-                    { new Guid("4b1ccc83-a651-4101-807b-246f94c80b90"), "Woestijn" }
+                    { new Guid("60e96b8b-14c8-4571-8c49-22508b182d98"), "Jungle" },
+                    { new Guid("41122567-e787-4afd-aa8a-3fc2d1bf8470"), "Boerderij" },
+                    { new Guid("317933b2-f771-4c5a-b09e-deabb8aa9d2a"), "Sneeuw" },
+                    { new Guid("2e826575-7866-40f0-85ee-1ffc3dc479c2"), "Woestijn" }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccessoryReservationEntity_ReservationId",
-                table: "AccessoryReservationEntity",
+                name: "IX_AccessoryReservations_ReservationId",
+                table: "AccessoryReservations",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnimalAccessoryEntity_AccessoryId",
-                table: "AnimalAccessoryEntity",
+                name: "IX_AnimalAccessories_AccessoryId",
+                table: "AnimalAccessories",
                 column: "AccessoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnimalReservationEntity_ReservationId",
-                table: "AnimalReservationEntity",
+                name: "IX_AnimalReservations_ReservationId",
+                table: "AnimalReservations",
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
@@ -363,13 +363,13 @@ namespace FissaBissa.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AccessoryReservationEntity");
+                name: "AccessoryReservations");
 
             migrationBuilder.DropTable(
-                name: "AnimalAccessoryEntity");
+                name: "AnimalAccessories");
 
             migrationBuilder.DropTable(
-                name: "AnimalReservationEntity");
+                name: "AnimalReservations");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,17 +13,19 @@ namespace FissaBissa.Controllers
     [Authorize(Roles = "Admin")]
     public class AnimalsController : Controller
     {
-        private readonly IAnimalRepository _repo;
+        private readonly IAnimalRepository _animalRepo;
+        private readonly IAccessoryRepository _accessoryRepo;
 
-        public AnimalsController(IAnimalRepository repo)
+        public AnimalsController(IAnimalRepository animalRepo, IAccessoryRepository accessoryRepo)
         {
-            _repo = repo;
+            _animalRepo = animalRepo;
+            _accessoryRepo = accessoryRepo;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _repo.Get());
+            return View(await _animalRepo.Get());
         }
 
         [HttpGet]
@@ -33,38 +36,41 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _repo.Get(id.Value);
+            var entity = await _animalRepo.Get(id.Value);
 
-            if (model == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            return View(entity);
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name");
+            ViewData["TypeId"] = new SelectList(await _animalRepo.GetTypes(), "Id", "Name");
+            ViewData["Accessories"] = new MultiSelectList(await _accessoryRepo.Get(), "Id", "Name");
 
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
+        public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price,Image,Accessories")]
+            AnimalModel model)
         {
             var path = await FileUtilities.StoreImage(nameof(model.Image), model.Image, ModelState);
 
             if (ModelState.IsValid)
             {
-                await _repo.Create(model, path);
+                await _animalRepo.Create(model, path);
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name", model.TypeId);
+            ViewData["TypeId"] = new SelectList(await _animalRepo.GetTypes(), "Id", "Name", model.TypeId);
+            ViewData["Accessories"] = new MultiSelectList(await _accessoryRepo.Get(), "Id", "Name", model.Accessories);
 
             return View(model);
         }
@@ -77,21 +83,24 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _repo.Get(id.Value);
+            var entity = await _animalRepo.Get(id.Value);
 
-            if (model == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name", model.TypeId);
+            ViewData["TypeId"] = new SelectList(await _animalRepo.GetTypes(), "Id", "Name", entity.TypeId);
+            ViewData["Accessories"] = new MultiSelectList(await _accessoryRepo.Get(), "Id", "Name",
+                entity.Accessories.Select((a) => a.AccessoryId).ToList());
 
-            return View(model.Transform());
+            return View(entity.Transform());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update(Guid id, [Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
+        public async Task<IActionResult> Update(Guid id, [Bind("Id,Name,TypeId,Price,Image,Accessories")]
+            AnimalModel model)
         {
             if (id != model.Id)
             {
@@ -102,12 +111,13 @@ namespace FissaBissa.Controllers
 
             if (ModelState.IsValid)
             {
-                await _repo.Update(model, path);
+                await _animalRepo.Update(model, path);
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name", model.TypeId);
+            ViewData["TypeId"] = new SelectList(await _animalRepo.GetTypes(), "Id", "Name", model.TypeId);
+            ViewData["Accessories"] = new MultiSelectList(await _accessoryRepo.Get(), "Id", "Name", model.Accessories);
 
             return View(model);
         }
@@ -120,7 +130,7 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _repo.Get(id.Value);
+            var model = await _animalRepo.Get(id.Value);
 
             if (model == null)
             {
@@ -134,7 +144,7 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _repo.Delete(id);
+            await _animalRepo.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }

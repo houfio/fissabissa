@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FissaBissa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200112092614_InitialSchema")]
+    [Migration("20200112100944_InitialSchema")]
     partial class InitialSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace FissaBissa.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("AccessoryReservationEntity");
+                    b.ToTable("AccessoryReservations");
                 });
 
             modelBuilder.Entity("FissaBissa.Entities.AnimalAccessoryEntity", b =>
@@ -70,7 +70,7 @@ namespace FissaBissa.Migrations
 
                     b.HasIndex("AccessoryId");
 
-                    b.ToTable("AnimalAccessoryEntity");
+                    b.ToTable("AnimalAccessories");
                 });
 
             modelBuilder.Entity("FissaBissa.Entities.AnimalEntity", b =>
@@ -112,7 +112,7 @@ namespace FissaBissa.Migrations
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("AnimalReservationEntity");
+                    b.ToTable("AnimalReservations");
                 });
 
             modelBuilder.Entity("FissaBissa.Entities.AnimalTypeEntity", b =>
@@ -132,22 +132,22 @@ namespace FissaBissa.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("bf550047-1eed-479f-a691-bf7d4c22bf17"),
+                            Id = new Guid("60e96b8b-14c8-4571-8c49-22508b182d98"),
                             Name = "Jungle"
                         },
                         new
                         {
-                            Id = new Guid("ad2c48ee-930a-428b-9b09-d2a23a7d9f4a"),
+                            Id = new Guid("41122567-e787-4afd-aa8a-3fc2d1bf8470"),
                             Name = "Boerderij"
                         },
                         new
                         {
-                            Id = new Guid("83e184af-10f4-4959-8013-bab04b09d0d4"),
+                            Id = new Guid("317933b2-f771-4c5a-b09e-deabb8aa9d2a"),
                             Name = "Sneeuw"
                         },
                         new
                         {
-                            Id = new Guid("4b1ccc83-a651-4101-807b-246f94c80b90"),
+                            Id = new Guid("2e826575-7866-40f0-85ee-1ffc3dc479c2"),
                             Name = "Woestijn"
                         });
                 });

@@ -19,6 +19,7 @@
             <div class="form-group">
                 <label asp-for="TypeId"></label>
                 <select asp-for="TypeId" class="form-control" asp-items="ViewBag.TypeId"></select>
+                <span asp-validation-for="TypeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price"></label>
@@ -32,6 +33,11 @@
                     <label asp-for="Image" class="custom-file-label">Choose file</label>
                     <span asp-validation-for="Image" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Accessories"></label>
+                <select asp-for="Accessories" class="form-control" asp-items="ViewBag.Accessories" multiple></select>
+                <span asp-validation-for="Accessories" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary"/>

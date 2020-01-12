@@ -23,8 +23,8 @@ namespace FissaBissa.Entities
         public string Image { get; set; }
 
         public virtual AnimalTypeEntity Type { get; set; }
-        public virtual List<AnimalAccessoryEntity> Accessories { get; set; }
-        public virtual List<AnimalReservationEntity> Reservations { get; set; }
+        public virtual ICollection<AnimalAccessoryEntity> Accessories { get; set; }
+        public virtual ICollection<AnimalReservationEntity> Reservations { get; set; }
 
         public AnimalModel Transform()
         {
@@ -42,6 +42,12 @@ namespace FissaBissa.Entities
             Name = data.Name;
             TypeId = data.TypeId;
             Price = data.Price;
+
+            if (create)
+            {
+                Accessories = new List<AnimalAccessoryEntity>();
+                Reservations = new List<AnimalReservationEntity>();
+            }
         }
     }
 }
