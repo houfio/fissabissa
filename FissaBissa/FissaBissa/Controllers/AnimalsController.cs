@@ -61,12 +61,10 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,TypeId,Price,Image")] AnimalModel model)
         {
-
             var path = await FileUtilities.StoreImage(nameof(model.Image), model.Image, ModelState);
 
             if (ModelState.IsValid)
             {
-
                 await Task.Run(() => _AnimalRepo.Create(model, path));
 
                 return RedirectToAction(nameof(Index));

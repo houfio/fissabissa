@@ -12,7 +12,7 @@ namespace FissaBissa.Models
         public string Name { get; set; }
 
         [Required, Display(Name = "Type")]
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
 
         [Required, Range(0, 10000), DataType(DataType.Currency)]
         public float Price { get; set; }

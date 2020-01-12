@@ -14,7 +14,7 @@ namespace FissaBissa.Entities
         public string Name { get; set; }
 
         [Required]
-        public int TypeId { get; set; }
+        public Guid TypeId { get; set; }
 
         [Required]
         public float Price { get; set; }
