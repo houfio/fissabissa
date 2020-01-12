@@ -7,3 +7,4 @@ uploads/
 *.suo
 *.user
 _ReSharper.*
+TestResults/
