@@ -1,6 +1,8 @@
 ﻿@model ReservationModel
 @{
     ViewData["Title"] = "Index";
+    var animals = ViewData["Animals"] as Dictionary<string, string>;
+    var accessories = ViewData["Accessories"] as Dictionary<string, string>;
     var discounts = ViewData["Discounts"] as Dictionary<string, int>;
 }
 
@@ -13,7 +15,7 @@
                 Stap 4 - Controlleer je gegevens
             </div>
             <div class="card-body">
-                <h5 class="card-title">Contact gegevens:</h5>
+                <h5 class="card-title">Contactgegevens:</h5>
                 <p class="card-text">
                     @Html.DisplayFor(model => model.FullName)
                 </p>
@@ -26,8 +28,20 @@
                         @Html.DisplayFor(model => model.Email)
                     </p>
                 }
-                <h5 class="card-title">Prijs / Korting:</h5>
+                <h5 class="card-title mt-2">Prijs / Korting:</h5>
                 <ul>
+                    @foreach (var animal in animals)
+                    {
+                        <li>
+                            @Html.DisplayFor(model => animal.Key): &euro;@Html.DisplayFor(model => animal.Value)
+                        </li>
+                    }
+                    @foreach (var accessory in accessories)
+                    {
+                        <li>
+                            @Html.DisplayFor(model => accessory.Key): &euro;@Html.DisplayFor(model => accessory.Value)
+                        </li>
+                    }
                     @foreach (var discount in discounts)
                     {
                         <li>
@@ -35,6 +49,12 @@
                         </li>
                     }
                 </ul>
+                <div class="mb-3">
+                    <strong>
+                        Totaal:
+                    </strong>
+                    &euro;@ViewData["TotalPrice"]
+                </div>
                 <form asp-action="Confirm">
                     <input type="hidden" asp-for="Date"/>
                     <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>

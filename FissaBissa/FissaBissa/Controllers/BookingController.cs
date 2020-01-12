@@ -96,18 +96,29 @@ namespace FissaBissa.Controllers
                 return await Contact(model);
             }
 
-            ViewData["Discounts"] = await _service.GetDiscountAsync(new DataModel
+            var animals = model.Animals
+                .Select((a) => _animalRepo.Get(a).Result)
+                .ToList();
+            var accessories = model.Accessories
+                .Select(a => _accessoryRepo.Get(a).Result)
+                .ToList();
+            var discounts = await _service.GetDiscountAsync(new DataModel
             {
                 Date = model.Date,
-                Animals = model.Animals
-                    .Select((a) => _animalRepo.Get(a).Result)
-                    .Select((a) => new ServiceReference.AnimalModel
+                Animals = animals.Select((a) => new ServiceReference.AnimalModel
                     {
                         Name = a.Name,
                         Type = a.Type.Name
                     })
                     .ToArray()
             });
+            var discount = Math.Min(60, discounts.Values.Sum());
+            var price = animals.Select(a => a.Price).Sum() + accessories.Select(a => a.Price).Sum();
+
+            ViewData["Animals"] = animals.ToDictionary(a => a.Name, a => a.Price.ToString("F"));
+            ViewData["Accessories"] = accessories.ToDictionary(a => a.Name, a => a.Price.ToString("F"));
+            ViewData["Discounts"] = discounts;
+            ViewData["TotalPrice"] = (price * (1.0 - discount / 100.0)).ToString("F");
 
             return View(model);
         }
