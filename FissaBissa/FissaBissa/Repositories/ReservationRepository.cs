@@ -13,7 +13,7 @@ namespace FissaBissa.Repositories
     {
         Task<ICollection<ReservationEntity>> Get(DateTime? date = null);
         Task<ReservationEntity> Get(Guid id);
-        Task Create(ReservationModel model);
+        Task<ReservationEntity> Create(ReservationModel model);
         Task Delete(Guid id);
     }
 
@@ -38,15 +38,29 @@ namespace FissaBissa.Repositories
             return await _context.Reservations.FindAsync(id);
         }
 
-        public async Task Create(ReservationModel model)
+        public async Task<ReservationEntity> Create(ReservationModel model)
         {
             var entity = new ReservationEntity();
 
             entity.Copy(model, true);
 
+            model.Animals.ToList().ForEach((a) => entity.Animals.Add(new AnimalReservationEntity
+            {
+                Reservation = entity,
+                AnimalId = a
+            }));
+
+            model.Accessories.ToList().ForEach((a) => entity.Accessories.Add(new AccessoryReservationEntity
+            {
+                Reservation = entity,
+                AccessoryId = a
+            }));
+
             _context.Add(entity);
 
             await _context.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task Delete(Guid id)

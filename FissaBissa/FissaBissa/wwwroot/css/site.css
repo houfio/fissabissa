@@ -65,5 +65,5 @@ body {
 
 .force-disable {
   pointer-events: none;
-  opacity: .75;
+  opacity: .5;
 }

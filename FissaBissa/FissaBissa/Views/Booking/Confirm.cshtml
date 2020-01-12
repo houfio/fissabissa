@@ -55,7 +55,7 @@
                     </strong>
                     &euro;@ViewData["TotalPrice"]
                 </div>
-                <form asp-action="Confirm">
+                <form asp-action="Finish">
                     <input type="hidden" asp-for="Date"/>
                     <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>
                     @if (Model.Accessories.Count > 0)
@@ -66,6 +66,7 @@
                     <input type="hidden" asp-for="Address"/>
                     <input type="hidden" asp-for="Email"/>
                     <input type="hidden" asp-for="PhoneNumber"/>
+                    <input type="hidden" asp-for="Price"/>
                     <div>
                         <input type="submit" value="Confirm" class="btn btn-primary"/>
                     </div>

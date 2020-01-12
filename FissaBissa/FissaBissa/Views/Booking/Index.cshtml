@@ -18,7 +18,7 @@
                     <input type="hidden" asp-for="Date"/>
                     @foreach (var animal in animals)
                     {
-                        <div class="form-group" style="display: inline-block @(unavailable.Contains(animal.Id) ? "force-disable" : "")">
+                        <div class="form-group @(unavailable.Contains(animal.Id) ? "force-disable" : "")" style="display: inline-block">
                             <div class="card" style="width: 10rem; max-width: 100%">
                                 <img src="@Url.Content(animal.Image)" class="card-img-top" alt="Image">
                                 <div class="card-body">

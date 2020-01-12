@@ -120,7 +120,28 @@ namespace FissaBissa.Controllers
             ViewData["Discounts"] = discounts;
             ViewData["TotalPrice"] = (price * (1.0 - discount / 100.0)).ToString("F");
 
+            model.Price = ViewData["TotalPrice"] as string;
+
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Finish(
+            [Bind("Date,Animals,Accessories,FullName,Address,Email,PhoneNumber,Price")]
+            ReservationModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var entity = await _reservationRepo.Create(model);
+
+            return RedirectToAction("Details", "Reservations", new
+            {
+                id = entity.Id
+            });
         }
     }
 }
