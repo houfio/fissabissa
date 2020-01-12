@@ -42,6 +42,28 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Telephone)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Animals)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var animal in Model.Animals)
+            {
+                <div>
+                    @Html.DisplayFor(model => animal.Animal.Name)
+                </div>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Accessories)
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var accessory in Model.Accessories)
+            {
+                <div>
+                    @Html.DisplayFor(model => accessory.Accessory.Name)
+                </div>
+            }
+        </dd>
     </dl>
 </div>
 <div>
