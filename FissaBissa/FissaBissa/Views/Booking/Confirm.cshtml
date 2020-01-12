@@ -1,6 +1,7 @@
 ﻿@model ReservationModel
 @{
     ViewData["Title"] = "Index";
+    var discounts = ViewData["Discounts"] as Dictionary<string, int>;
 }
 
 <h1>Booking - Confirm</h1>
@@ -26,16 +27,27 @@
                     </p>
                 }
                 <h5 class="card-title">Prijs / Korting:</h5>
+                <ul>
+                    @foreach (var discount in discounts)
+                    {
+                        <li>
+                            @Html.DisplayFor(model => discount.Key): @Html.DisplayFor(model => discount.Value)%
+                        </li>
+                    }
+                </ul>
                 <form asp-action="Confirm">
-                    <input type="hidden" asp-for="Date" />
-                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)" />
-                    <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)" />
-                    <input type="hidden" asp-for="FullName" />
-                    <input type="hidden" asp-for="Address" />
-                    <input type="hidden" asp-for="Email" />
-                    <input type="hidden" asp-for="PhoneNumber" />
+                    <input type="hidden" asp-for="Date"/>
+                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>
+                    @if (Model.Accessories.Count > 0)
+                    {
+                        <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)"/>
+                    }
+                    <input type="hidden" asp-for="FullName"/>
+                    <input type="hidden" asp-for="Address"/>
+                    <input type="hidden" asp-for="Email"/>
+                    <input type="hidden" asp-for="PhoneNumber"/>
                     <div>
-                        <input type="submit" value="Confirm" class="btn btn-primary" />
+                        <input type="submit" value="Confirm" class="btn btn-primary"/>
                     </div>
                 </form>
             </div>

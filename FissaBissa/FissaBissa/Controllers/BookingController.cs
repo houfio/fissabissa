@@ -7,6 +7,8 @@ using FissaBissa.Repositories;
 using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using ServiceReference;
 
 namespace FissaBissa.Controllers
 {
@@ -16,14 +18,16 @@ namespace FissaBissa.Controllers
         private readonly IReservationRepository _reservationRepo;
         private readonly IAccessoryRepository _accessoryRepo;
         private readonly UserManager<UserEntity> _userManager;
+        private readonly IService _service;
 
         public BookingController(IAnimalRepository animalRepo, IReservationRepository reservationRepo,
-            IAccessoryRepository accessoryRepo, UserManager<UserEntity> userManager)
+            IAccessoryRepository accessoryRepo, UserManager<UserEntity> userManager, IService service)
         {
             _animalRepo = animalRepo;
             _reservationRepo = reservationRepo;
             _accessoryRepo = accessoryRepo;
             _userManager = userManager;
+            _service = service;
         }
 
         [HttpPost]
@@ -53,7 +57,7 @@ namespace FissaBissa.Controllers
             OrderValidator.ValidateOrder(nameof(model.Animals),
                 model.Animals.Select(i => _animalRepo.Get(i).Result).ToList(), model.Date, ModelState);
 
-            if (!ModelState.IsValid)
+            if (ModelState.GetFieldValidationState(nameof(model.Animals)) != ModelValidationState.Valid)
             {
                 return await Index(model);
             }
@@ -91,6 +95,19 @@ namespace FissaBissa.Controllers
             {
                 return await Contact(model);
             }
+
+            ViewData["Discounts"] = await _service.GetDiscountAsync(new DataModel
+            {
+                Date = model.Date,
+                Animals = model.Animals
+                    .Select((a) => _animalRepo.Get(a).Result)
+                    .Select((a) => new ServiceReference.AnimalModel
+                    {
+                        Name = a.Name,
+                        Type = a.Type.Name
+                    })
+                    .ToArray()
+            });
 
             return View(model);
         }
