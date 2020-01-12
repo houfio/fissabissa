@@ -28,7 +28,7 @@ namespace FissaBissa.Utilities
             }
 
             if ((!InRange(date.Month, 2, 10) && HasAnimalType(animals, "Woestijn"))
-                || (InRange(date.Month, 6, 7) && HasAnimalType(animals, "Sneeuw")))
+                || (InRange(date.Month, 5, 8) && HasAnimalType(animals, "Sneeuw")))
             {
                 state.AddModelError(key, "Invalid order month");
             }

@@ -36,18 +36,19 @@ namespace FissaBissa.Tests
         public async Task Detail_ReturnsAViewResult_WithAnAnimal()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAnimalRepo = new Mock<IAnimalRepository>();
-            mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAnimalRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAnimal());
             var controller = new AnimalsController(mockAnimalRepo.Object, null);
 
             // Act
-            var result = await controller.Details(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Details(id);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<AnimalEntity>(viewResult.ViewData.Model);
-            Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
+            Assert.Equal(id, model.Id);
         }
 
         [Fact]
@@ -86,41 +87,43 @@ namespace FissaBissa.Tests
         public async Task Update_ReturnsAViewResult_WithAnAnimal()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAnimalRepo = new Mock<IAnimalRepository>();
-            mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAnimalRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAnimal());
             mockAnimalRepo.Setup(repo => repo.GetTypes())
-               .Returns(GetTypes());
+                .Returns(GetTypes());
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
             mockAccessoryRepo.Setup(repo => repo.Get())
                 .Returns(GetTestAccessories());
             var controller = new AnimalsController(mockAnimalRepo.Object, mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.Update(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Update(id);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<AnimalModel>(viewResult.ViewData.Model);
-            Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
+            Assert.Equal(id, model.Id);
         }
 
         [Fact]
         public async Task Delete_ReturnsAViewResult_WithAnAnimal()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAnimalRepo = new Mock<IAnimalRepository>();
-            mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAnimalRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAnimal());
             var controller = new AnimalsController(mockAnimalRepo.Object, null);
 
             // Act
-            var result = await controller.Delete((Guid?)Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Delete((Guid?) id);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<AnimalEntity>(viewResult.ViewData.Model);
-            Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
+            Assert.Equal(id, model.Id);
         }
 
         [Fact]
@@ -142,14 +145,15 @@ namespace FissaBissa.Tests
         public async Task Delete_ReturnsARedirect()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAnimalRepo = new Mock<IAnimalRepository>();
-            mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAnimalRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAnimal());
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
             var controller = new AnimalsController(mockAnimalRepo.Object, mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.Delete(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Delete(id);
 
             // Assert
             var redirect = Assert.IsType<RedirectToActionResult>(result);
@@ -175,7 +179,6 @@ namespace FissaBissa.Tests
                     TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17"),
                     Accessories = new List<AnimalAccessoryEntity>()
                     {
-                        
                     } as ICollection<AnimalAccessoryEntity>
                 }
             } as ICollection<AnimalEntity>);
@@ -224,7 +227,9 @@ namespace FissaBissa.Tests
                 Id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"),
                 Name = "Kat",
                 Price = 500,
-                TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17")
+                TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17"),
+                Accessories = new List<AnimalAccessoryEntity>(),
+                Reservations = new List<AnimalReservationEntity>()
             });
         }
 

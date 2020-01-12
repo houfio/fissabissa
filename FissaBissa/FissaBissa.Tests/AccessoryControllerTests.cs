@@ -1,17 +1,17 @@
 ﻿using System;
-using Xunit;
-using Moq;
-using FissaBissa.Controllers;
-using System.Threading.Tasks;
-using FissaBissa.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FissaBissa.Controllers;
 using FissaBissa.Entities;
 using FissaBissa.Models;
-using System.Text;
-using System.IO;
+using FissaBissa.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Xunit;
 
 namespace FissaBissa.Tests
 {
@@ -39,18 +39,19 @@ namespace FissaBissa.Tests
         public async Task Detail_ReturnsAViewResult_WithAccessory()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            mockAccessoryRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAccessoryRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAccessory());
             var controller = new AccessoriesController(mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.Details(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Details(id);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<AccessoryEntity>(viewResult.ViewData.Model);
-            Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
+            Assert.Equal(id, model.Id);
         }
 
         [Fact]
@@ -69,8 +70,7 @@ namespace FissaBissa.Tests
         [Fact]
         public async Task Create_ReturnsAViewResult()
         {
-            var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            var controller = new AccessoriesController(mockAccessoryRepo.Object);
+            var controller = new AccessoriesController(null);
 
             // Act
             var result = controller.Create();
@@ -80,53 +80,41 @@ namespace FissaBissa.Tests
         }
 
         [Fact]
-        public async Task Create_ReturnsAViewResult_WithModel()
-        {
-            var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            var controller = new AccessoriesController(mockAccessoryRepo.Object);
-
-            // Act
-            var result = controller.Create(GetTestAccessoryModel());
-
-            // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.IsAssignableFrom<AccessoryModel>(viewResult.ViewData.Model);
-        }
-
-        [Fact]
         public async Task Update_ReturnsAViewResult_WithAccessory()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            mockAccessoryRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAccessoryRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAccessory());
             var controller = new AccessoriesController(mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.Update((Guid?)Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Update(id);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<AccessoryModel>(viewResult.ViewData.Model);
-            Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
+            Assert.Equal(id, model.Id);
         }
 
         [Fact]
         public async Task Delete_ReturnsAViewResult_WithAccessory()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            mockAccessoryRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAccessoryRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAccessory());
             var controller = new AccessoriesController(mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.Delete((Guid?)Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Delete(id);
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<AccessoryEntity>(viewResult.ViewData.Model);
-            Assert.Equal(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"), model.Id);
+            Assert.Equal(id, model.Id);
         }
 
         [Fact]
@@ -146,32 +134,34 @@ namespace FissaBissa.Tests
         }
 
         [Fact]
-        public async Task Delete_ReturnsNotFound_EntityNull ()
+        public async Task Delete_ReturnsNotFound_EntityNull()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            mockAccessoryRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAccessoryRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAccessory());
             var controller = new AccessoriesController(mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.Delete((Guid?)Guid.Parse("e17217e7-7197-4215-ae13-ab6f7c3661f1"));
+            var result = await controller.Delete(id);
 
             // Assert
-            Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
         public async Task DeleteConfirmed_ReturnsARedirect()
         {
             // Arrange
+            var id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb");
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
-            mockAccessoryRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
+            mockAccessoryRepo.Setup(repo => repo.Get(id))
                 .Returns(GetTestAccessory());
             var controller = new AccessoriesController(mockAccessoryRepo.Object);
 
             // Act
-            var result = await controller.DeleteConfirmed(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.DeleteConfirmed(id);
 
             // Assert
             var redirect = Assert.IsType<RedirectToActionResult>(result);
@@ -180,41 +170,41 @@ namespace FissaBissa.Tests
 
         private Task<ICollection<AccessoryEntity>> GetTestAccessories()
         {
-            return Task.FromResult(new List<AccessoryEntity>()
+            return Task.FromResult(new List<AccessoryEntity>
             {
-                new AccessoryEntity()
+                new AccessoryEntity
                 {
                     Id = Guid.NewGuid(),
                     Name = "Halsband",
-                    Price = 500,
+                    Price = 500
                 },
-                new AccessoryEntity()
+                new AccessoryEntity
                 {
                     Id = Guid.NewGuid(),
                     Name = "Ketting",
-                    Price = 500,
-                },
+                    Price = 500
+                }
             } as ICollection<AccessoryEntity>);
         }
 
         private Task<AccessoryEntity> GetTestAccessory()
         {
-            return Task.FromResult(new AccessoryEntity()
+            return Task.FromResult(new AccessoryEntity
             {
                 Id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"),
                 Name = "Ketting",
-                Price = 500,
+                Price = 500
             });
         }
 
         private AccessoryModel GetTestAccessoryModel()
         {
-            return new AccessoryModel()
+            return new AccessoryModel
             {
                 Id = Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"),
                 Name = "",
                 Price = 500,
-                Image = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.txt")
+                Image = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("dummy")), 0, 0, "data", "dummy.txt")
             };
         }
     }

@@ -8,11 +8,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FissaBissa.Discounts", "FissaBissa.Discounts\FissaBissa.Discounts.csproj", "{452FA841-2489-43E7-9102-AC1DB33AC033}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FissaBissa.Tests", "FissaBissa.Tests\FissaBissa.Tests.csproj", "{9950A100-5170-443C-9E06-7B451ACD44C8}"
+<<<<<<< HEAD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{23F5AEF7-F754-4BA4-B2AC-CD1ABF72488B}"
 	ProjectSection(SolutionItems) = preProject
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 	EndProjectSection
+=======
+>>>>>>> 47d92f591abfe592d532a13929eeeaf34ae303e6
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
