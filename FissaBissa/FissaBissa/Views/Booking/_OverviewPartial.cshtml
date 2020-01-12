@@ -1,6 +1,7 @@
 ﻿@model ReservationModel
 
-@inject IAnimalRepository AnimalRepository
+@inject IAnimalRepository animalRepository
+@inject IAccessoryRepository accessoryRepository
 
 <div class="col-md-3">
     <div class="card">
@@ -9,22 +10,47 @@
         </div>
         <div class="card-body">
             Datum: @Html.DisplayFor(model => model.Date)
-            <hr class="my-4" />
-            Beestjes<br />
+            <hr class="my-4"/>
+            <span class="d-inline-block mb-1">Beestjes</span><br/>
             @if (Model.Animals == null || Model.Animals.Count == 0)
             {
-                <span>
-                    Nog geen beestjes geselecteerd
-                </span>
+                <small>
+                    Geen beestjes geselecteerd
+                </small>
             }
             else
             {
-                @foreach (var animal in Model.Animals)
-                {
-                    var parsed = await AnimalRepository.Get(Guid.Parse(animal));
+                <ul>
+                    @foreach (var animal in Model.Animals)
+                    {
+                        var parsed = await animalRepository.Get(animal);
 
-                    @Html.DisplayFor(model => parsed.Name);<br />
-                }
+                        <li>
+                            @Html.DisplayFor(model => parsed.Name)
+                        </li>
+                    }
+                </ul>
+            }
+            <hr class="my-4"/>
+            <span class="d-inline-block mb-1">Accessories</span><br/>
+            @if (Model.Accessories == null || Model.Accessories.Count == 0)
+            {
+                <small>
+                    Geen accessories geselecteerd
+                </small>
+            }
+            else
+            {
+                <ul>
+                    @foreach (var accessory in Model.Accessories)
+                    {
+                        var parsed = await accessoryRepository.Get(accessory);
+
+                        <li>
+                            @Html.DisplayFor(model => parsed.Name)
+                        </li>
+                    }
+                </ul>
             }
         </div>
     </div>

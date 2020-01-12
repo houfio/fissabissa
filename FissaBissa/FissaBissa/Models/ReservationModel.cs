@@ -9,6 +9,20 @@ namespace FissaBissa.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        public ICollection<string> Animals { get; set; }
+        public ICollection<Guid> Animals { get; set; }
+
+        public ICollection<Guid> Accessories { get; set; }
+
+        [Required, Display(Name = "Name"), StringLength(100, MinimumLength = 6)]
+        public string FullName { get; set; }
+
+        [Required, StringLength(100, MinimumLength = 6)]
+        public string Address { get; set; }
+
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Phone, Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
     }
 }

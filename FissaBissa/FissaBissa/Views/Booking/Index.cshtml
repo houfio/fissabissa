@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
     var animals = ViewData["Animals"] as ICollection<AnimalEntity>;
+    var unavailable = ViewData["Unavailable"] as ICollection<Guid>;
 }
 
 <h1>Booking - Animals</h1>
@@ -14,9 +15,10 @@
             </div>
             <div class="card-body">
                 <form asp-action="Accessories">
+                    <input type="hidden" asp-for="Date"/>
                     @foreach (var animal in animals)
                     {
-                        <div class="form-group" style="display: inline-block">
+                        <div class="form-group" style="display: inline-block @(unavailable.Contains(animal.Id) ? "force-disable" : "")">
                             <div class="card" style="width: 10rem; max-width: 100%">
                                 <img src="@Url.Content(animal.Image)" class="card-img-top" alt="Image">
                                 <div class="card-body">
@@ -32,6 +34,7 @@
                     }
                     <div>
                         <input type="submit" value="Next" class="btn btn-primary"/>
+                        <span asp-validation-for="Animals" class="text-danger"></span>
                     </div>
                 </form>
             </div>

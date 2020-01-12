@@ -1,0 +1,31 @@
+﻿@model ReservationModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Booking - Confirm</h1>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header">
+                Stap 4 - Controlleer je gegevens
+            </div>
+            <div class="card-body">
+                <form asp-action="Confirm">
+                    <input type="hidden" asp-for="Date"/>
+                    <input type="hidden" asp-for="Animals"/>
+                    <input type="hidden" asp-for="Accessories"/>
+                    <input type="hidden" asp-for="FullName"/>
+                    <input type="hidden" asp-for="Address"/>
+                    <input type="hidden" asp-for="Email"/>
+                    <input type="hidden" asp-for="PhoneNumber"/>
+                    <div>
+                        <input type="submit" value="Confirm" class="btn btn-primary"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <partial name="_OverviewPartial"/>
+</div>

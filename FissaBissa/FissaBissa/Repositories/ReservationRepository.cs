@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using FissaBissa.Data;
 using FissaBissa.Entities;
@@ -10,7 +11,7 @@ namespace FissaBissa.Repositories
 {
     public interface IReservationRepository
     {
-        Task<ICollection<ReservationEntity>> Get();
+        Task<ICollection<ReservationEntity>> Get(DateTime? date = null);
         Task<ReservationEntity> Get(Guid id);
         Task Create(ReservationModel model);
         Task Delete(Guid id);
@@ -25,9 +26,11 @@ namespace FissaBissa.Repositories
             _context = context;
         }
 
-        public async Task<ICollection<ReservationEntity>> Get()
+        public async Task<ICollection<ReservationEntity>> Get(DateTime? date)
         {
-            return await _context.Reservations.ToListAsync();
+            return await _context.Reservations
+                .Where((r) => date == null || r.Date.Date == date.Value.Date)
+                .ToListAsync();
         }
 
         public async Task<ReservationEntity> Get(Guid id)
