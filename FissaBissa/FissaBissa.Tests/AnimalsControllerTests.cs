@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FissaBissa.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using FissaBissa.Models;
+using System.Linq;
 using FissaBissa.Entities;
 
 namespace FissaBissa.Tests
@@ -17,10 +17,11 @@ namespace FissaBissa.Tests
         public async Task Index_ReturnsAViewResult_WithAListOfAnimals()
         {
             // Arrange
-            var mockRepo = new Mock<IAnimalRepository>();
-            mockRepo.Setup(repo => repo.Get())
+            var mockAnimalRepo = new Mock<IAnimalRepository>();
+            mockAnimalRepo.Setup(repo => repo.Get())
                 .Returns(GetTestAnimals());
-            var controller = new AnimalsController(mockRepo.Object);
+            var mockAccessoryRepo = new Mock<IAccessoryRepository>();
+            var controller = new AnimalsController(mockAnimalRepo.Object, mockAccessoryRepo.Object);
 
             // Act
             var result = await controller.Index();
@@ -45,11 +46,11 @@ namespace FissaBissa.Tests
                 new AnimalEntity()
                 {
                     Id = Guid.NewGuid(),
-                    Name = "kat",
+                    Name = "Kat",
                     Price = 500,
-                    TypeId = new Guid("bf550047-1eed-479f-a691-bf7d4c22bf17")
+                    TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17")
                 }
-            });
+            } as ICollection<AnimalEntity>);
         }
     }
 }

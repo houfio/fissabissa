@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using FissaBissa.Data;
-using FissaBissa.Entities;
 using FissaBissa.Models;
 using FissaBissa.Repositories;
 using FissaBissa.Utilities;

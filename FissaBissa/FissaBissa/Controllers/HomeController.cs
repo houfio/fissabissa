@@ -24,6 +24,20 @@ namespace FissaBissa.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index([Bind("Date")] ReservationModel model)
+        {
+            if (DateTime.Today >= model.Date.Date)
+            {
+                ModelState.AddModelError(nameof(model.Date), "Selected date must be after today");
+
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {
             Response.Cookies.Append(
