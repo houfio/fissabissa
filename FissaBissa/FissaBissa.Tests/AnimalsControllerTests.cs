@@ -79,8 +79,7 @@ namespace FissaBissa.Tests
             var result = await controller.Create();
 
             // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            Assert.IsAssignableFrom<AnimalModel>(viewResult.ViewData.Model);
+            Assert.IsType<ViewResult>(result);
         }
 
         [Fact]
@@ -90,6 +89,8 @@ namespace FissaBissa.Tests
             var mockAnimalRepo = new Mock<IAnimalRepository>();
             mockAnimalRepo.Setup(repo => repo.Get(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb")))
                 .Returns(GetTestAnimal());
+            mockAnimalRepo.Setup(repo => repo.GetTypes())
+               .Returns(GetTypes());
             var mockAccessoryRepo = new Mock<IAccessoryRepository>();
             mockAccessoryRepo.Setup(repo => repo.Get())
                 .Returns(GetTestAccessories());
@@ -114,7 +115,7 @@ namespace FissaBissa.Tests
             var controller = new AnimalsController(mockAnimalRepo.Object, null);
 
             // Act
-            var result = await controller.Delete(Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
+            var result = await controller.Delete((Guid?)Guid.Parse("f0652b93-1728-43f2-8bf7-81d4dadfedfb"));
 
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -171,7 +172,11 @@ namespace FissaBissa.Tests
                     Id = Guid.NewGuid(),
                     Name = "Kat",
                     Price = 500,
-                    TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17")
+                    TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17"),
+                    Accessories = new List<AnimalAccessoryEntity>()
+                    {
+                        
+                    } as ICollection<AnimalAccessoryEntity>
                 }
             } as ICollection<AnimalEntity>);
         }
@@ -221,6 +226,23 @@ namespace FissaBissa.Tests
                 Price = 500,
                 TypeId = Guid.Parse("bf550047-1eed-479f-a691-bf7d4c22bf17")
             });
+        }
+
+        private Task<ICollection<AnimalTypeEntity>> GetTypes()
+        {
+            return Task.FromResult(new List<AnimalTypeEntity>()
+            {
+                new AnimalTypeEntity()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Woestijn",
+                },
+                new AnimalTypeEntity()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Boerderij",
+                }
+            } as ICollection<AnimalTypeEntity>);
         }
     }
 }
