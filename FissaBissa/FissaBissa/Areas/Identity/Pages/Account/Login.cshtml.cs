@@ -11,8 +11,12 @@ namespace FissaBissa.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        [BindProperty] public LoginInputModel Input { get; set; }
-        [TempData] public string ErrorMessage { get; set; }
+        [BindProperty]
+        public LoginInputModel Input { get; set; }
+
+        [TempData]
+        public string ErrorMessage { get; set; }
+
         public string ReturnUrl { get; set; }
 
         private readonly SignInManager<UserEntity> _signInManager;
@@ -60,11 +64,13 @@ namespace FissaBissa.Areas.Identity.Pages.Account
 
     public class LoginInputModel
     {
-        [Required, EmailAddress] public string Email { get; set; }
+        [Required, EmailAddress]
+        public string Email { get; set; }
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me")] public bool RememberMe { get; set; }
+        [Display(Name = "Remember me")]
+        public bool RememberMe { get; set; }
     }
 }

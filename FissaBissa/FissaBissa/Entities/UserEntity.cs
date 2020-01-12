@@ -10,8 +10,10 @@ namespace FissaBissa.Entities
             SecurityStamp = Guid.NewGuid().ToString();
         }
 
-        [ProtectedPersonalData] public string FullName { get; set; }
+        [PersonalData]
+        public string FullName { get; set; }
 
-        [ProtectedPersonalData] public string Address { get; set; }
+        [PersonalData]
+        public string Address { get; set; }
     }
 }
