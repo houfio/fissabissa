@@ -12,16 +12,30 @@
                 Stap 4 - Controlleer je gegevens
             </div>
             <div class="card-body">
+                <h5 class="card-title">Contact gegevens:</h5>
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.FullName)
+                </p>
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.Address)
+                </p>
+                @if (!string.IsNullOrWhiteSpace(Model.Email))
+                {
+                    <p class="card-text">
+                        @Html.DisplayFor(model => model.Email)
+                    </p>
+                }
+                <h5 class="card-title">Prijs / Korting:</h5>
                 <form asp-action="Confirm">
-                    <input type="hidden" asp-for="Date"/>
-                    <input type="hidden" asp-for="Animals"/>
-                    <input type="hidden" asp-for="Accessories"/>
-                    <input type="hidden" asp-for="FullName"/>
-                    <input type="hidden" asp-for="Address"/>
-                    <input type="hidden" asp-for="Email"/>
-                    <input type="hidden" asp-for="PhoneNumber"/>
+                    <input type="hidden" asp-for="Date" />
+                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)" />
+                    <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)" />
+                    <input type="hidden" asp-for="FullName" />
+                    <input type="hidden" asp-for="Address" />
+                    <input type="hidden" asp-for="Email" />
+                    <input type="hidden" asp-for="PhoneNumber" />
                     <div>
-                        <input type="submit" value="Confirm" class="btn btn-primary"/>
+                        <input type="submit" value="Confirm" class="btn btn-primary" />
                     </div>
                 </form>
             </div>

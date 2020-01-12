@@ -14,8 +14,8 @@
             <div class="card-body">
                 <form asp-action="Confirm">
                     <input type="hidden" asp-for="Date"/>
-                    <input type="hidden" asp-for="Animals"/>
-                    <input type="hidden" asp-for="Accessories"/>
+                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>
+                    <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)"/>
                     <div class="form-group">
                         <label asp-for="FullName"></label>
                         <input asp-for="FullName" class="form-control"/>

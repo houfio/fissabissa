@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FissaBissa.Entities;
 using FissaBissa.Models;
 using FissaBissa.Repositories;
+using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -49,10 +50,11 @@ namespace FissaBissa.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Accessories([Bind("Date,Animals")] ReservationModel model)
         {
-            if (model.Animals == null || model.Animals.Count == 0)
-            {
-                ModelState.AddModelError(nameof(model.Animals), "Must select at least one");
+            OrderValidator.ValidateOrder(nameof(model.Animals),
+                model.Animals.Select(i => _animalRepo.Get(i).Result).ToList(), model.Date, ModelState);
 
+            if (!ModelState.IsValid)
+            {
                 return await Index(model);
             }
 
@@ -77,7 +79,7 @@ namespace FissaBissa.Controllers
                 ModelState.Clear();
             }
 
-            return View(model);
+            return View(nameof(Contact), model);
         }
 
         [HttpPost]
@@ -85,6 +87,11 @@ namespace FissaBissa.Controllers
         public async Task<IActionResult> Confirm([Bind("Date,Animals,Accessories,FullName,Address,Email,PhoneNumber")]
             ReservationModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return await Contact(model);
+            }
+
             return View(model);
         }
     }

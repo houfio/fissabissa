@@ -12,7 +12,7 @@
             Datum: @Html.DisplayFor(model => model.Date)
             <hr class="my-4"/>
             <span class="d-inline-block mb-1">Beestjes</span><br/>
-            @if (Model.Animals == null || Model.Animals.Count == 0)
+            @if (Model.Animals.Count == 0)
             {
                 <small>
                     Geen beestjes geselecteerd
@@ -33,7 +33,7 @@
             }
             <hr class="my-4"/>
             <span class="d-inline-block mb-1">Accessories</span><br/>
-            @if (Model.Accessories == null || Model.Accessories.Count == 0)
+            @if (Model.Accessories.Count == 0)
             {
                 <small>
                     Geen accessories geselecteerd
