@@ -58,7 +58,7 @@ namespace FissaBissa.Tests
             }
 
             // Assert
-            Assert.InRange(total, 5, 25);
+            Assert.InRange(total, 6, 26);
         }
 
         [Fact]

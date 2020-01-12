@@ -57,7 +57,7 @@ namespace FissaBissa.Utilities
             return $"/{string.Join("/", relative)}";
         }
 
-        private static string GetExtension(string fileName, Stream data)
+        public static string GetExtension(string fileName, Stream data)
         {
             if (string.IsNullOrEmpty(fileName) || data == null || data.Length == 0)
             {
