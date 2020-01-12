@@ -130,14 +130,14 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _animalRepo.Get(id.Value);
+            var entity = await _animalRepo.Get(id.Value);
 
-            if (model == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return View(model);
+            return View(entity);
         }
 
         [HttpPost]

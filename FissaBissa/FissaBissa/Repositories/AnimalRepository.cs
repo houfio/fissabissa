@@ -6,7 +6,6 @@ using FissaBissa.Data;
 using FissaBissa.Entities;
 using FissaBissa.Models;
 using Microsoft.EntityFrameworkCore;
-using Guid = System.Guid;
 
 namespace FissaBissa.Repositories
 {
@@ -59,7 +58,7 @@ namespace FissaBissa.Repositories
 
         public async Task Update(AnimalModel model, string path)
         {
-            var entity = await _context.Animals.FindAsync(model.Id);
+            var entity = await Get(model.Id);
 
             entity.Copy(model, false);
             entity.Image = path;
@@ -72,9 +71,7 @@ namespace FissaBissa.Repositories
 
         public async Task Delete(Guid id)
         {
-            var model = await _context.Animals.FindAsync(id);
-
-            _context.Animals.Remove(model);
+            _context.Remove(await Get(id));
 
             await _context.SaveChangesAsync();
         }
