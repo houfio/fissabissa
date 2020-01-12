@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Accessories" xml:space="preserve">
-    <value>Accessoires</value>
+  <data name="Booking - Confirm" xml:space="preserve">
+    <value>Reservatie - Conformatie</value>
   </data>
-  <data name="Animals" xml:space="preserve">
-    <value>Diertjes</value>
+  <data name="Confirm" xml:space="preserve">
+    <value>Conformeren</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Thuis</value>
+  <data name="Contactdetails:" xml:space="preserve">
+    <value>Contactgegevens:</value>
   </data>
-  <data name="Reservations" xml:space="preserve">
-    <value>Boekingen</value>
+  <data name="Price / Discount:" xml:space="preserve">
+    <value>Prijs / Korting:</value>
+  </data>
+  <data name="Step 4 - Check your details" xml:space="preserve">
+    <value>Stap 4 - Controlleer je gegevens</value>
+  </data>
+  <data name="Total:" xml:space="preserve">
+    <value>Totaal:</value>
   </data>
 </root>

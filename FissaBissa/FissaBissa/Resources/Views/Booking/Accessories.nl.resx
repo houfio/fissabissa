@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Accessories" xml:space="preserve">
-    <value>Accessoires</value>
-  </data>
   <data name="Animals" xml:space="preserve">
     <value>Diertjes</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Thuis</value>
+  <data name="Booking - Accessories" xml:space="preserve">
+    <value>Reservatie - Accessoires</value>
   </data>
-  <data name="Reservations" xml:space="preserve">
-    <value>Boekingen</value>
+  <data name="Next" xml:space="preserve">
+    <value>Volgende</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>Boeking</value>
+  </data>
+  <data name="Step 2 - Choose your accessories" xml:space="preserve">
+    <value>Stap 2 - Kies je accessories</value>
   </data>
 </root>

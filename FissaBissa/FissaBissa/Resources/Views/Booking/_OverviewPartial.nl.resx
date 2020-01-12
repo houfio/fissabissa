@@ -123,10 +123,13 @@
   <data name="Animals" xml:space="preserve">
     <value>Diertjes</value>
   </data>
-  <data name="Home" xml:space="preserve">
-    <value>Thuis</value>
+  <data name="No accessories have been selected" xml:space="preserve">
+    <value>Geen accessories geselecteerd</value>
   </data>
-  <data name="Reservations" xml:space="preserve">
-    <value>Boekingen</value>
+  <data name="No animals have been selected" xml:space="preserve">
+    <value>Geen beestjes geselecteerd</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>Boeking</value>
   </data>
 </root>

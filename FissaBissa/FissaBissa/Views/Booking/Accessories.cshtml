@@ -1,21 +1,24 @@
-﻿@model ReservationModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+@model ReservationModel
 @{
     ViewData["Title"] = "Index";
     var accessories = ViewData["Accessories"] as ICollection<AccessoryEntity>;
 }
 
-<h1>Booking - Accessories</h1>
+<h1>@Localizer["Booking - Accessories"]</h1>
 
 <div class="row">
     <div class="col-md-9">
         <div class="card">
             <div class="card-header">
-                Stap 2 - Kies je accessories
+                @Localizer["Step 2 - Choose your accessories"]
             </div>
             <div class="card-body">
                 <form asp-action="Contact">
-                    <input type="hidden" asp-for="Date"/>
-                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>
+                    <input type="hidden" asp-for="Date" />
+                    <input type="hidden" name="@Localizer["Animals"]" value="@string.Join(",", Model.Animals)" />
                     @foreach (var accessory in accessories)
                     {
                         <div class="form-group" style="display: inline-block">
@@ -23,7 +26,7 @@
                                 <img src="@Url.Content(accessory.Image)" class="card-img-top" alt="Image">
                                 <div class="card-body">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" id="@accessory.Id" name="Accessories" class="custom-control-input" value="@accessory.Id"/>
+                                        <input type="checkbox" id="@accessory.Id" name="Accessories" class="custom-control-input" value="@accessory.Id" />
                                         <label class="custom-control-label" for="@accessory.Id">
                                             @Html.DisplayFor(model => accessory.Name)
                                         </label>
@@ -33,11 +36,11 @@
                         </div>
                     }
                     <div>
-                        <input type="submit" value="Next" class="btn btn-primary"/>
+                        <input type="submit" value="@Localizer["Next"]" class="btn btn-primary" />
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <partial name="_OverviewPartial"/>
+    <partial name="_OverviewPartial" />
 </div>

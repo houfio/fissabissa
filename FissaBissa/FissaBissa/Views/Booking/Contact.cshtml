@@ -1,52 +1,55 @@
 ﻿@model ReservationModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Booking - Contact</h1>
+<h1>@Localizer["Booking - Contact"]</h1>
 
 <div class="row">
     <div class="col-md-9">
         <div class="card">
             <div class="card-header">
-                Stap 3 - Vul je contactgegevens in
+                @Localizer[" Step 3 - Fill in your contact information"]
             </div>
             <div class="card-body">
                 <form asp-action="Confirm">
-                    <input type="hidden" asp-for="Date"/>
-                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)"/>
+                    <input type="hidden" asp-for="Date" />
+                    <input type="hidden" name="Animals" value="@string.Join(",", Model.Animals)" />
                     @if (Model.Accessories.Count > 0)
                     {
-                        <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)"/>
+                        <input type="hidden" name="Accessories" value="@string.Join(",", Model.Accessories)" />
                     }
                     <div class="form-group">
                         <label asp-for="FullName"></label>
-                        <input asp-for="FullName" class="form-control"/>
+                        <input asp-for="FullName" class="form-control" />
                         <span asp-validation-for="FullName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Address"></label>
-                        <input asp-for="Address" class="form-control"/>
+                        <input asp-for="Address" class="form-control" />
                         <span asp-validation-for="Address" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Email"></label>
-                        <input asp-for="Email" class="form-control"/>
+                        <input asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="PhoneNumber"></label>
-                        <input asp-for="PhoneNumber" class="form-control"/>
+                        <input asp-for="PhoneNumber" class="form-control" />
                         <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                     <div>
-                        <input type="submit" value="Next" class="btn btn-primary"/>
+                        <input type="submit" value="@Localizer["Next"]" class="btn btn-primary" />
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <partial name="_OverviewPartial"/>
+    <partial name="_OverviewPartial" />
 </div>
 
 @section Scripts {
