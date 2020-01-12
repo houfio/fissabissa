@@ -123,4 +123,7 @@
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="Reservation list" xml:space="preserve">
+    <value>Lijst van Boekingen</value>
+  </data>
 </root>
