@@ -69,6 +69,7 @@ namespace FissaBissa
 
             services.AddScoped<IAnimalRepository, AnimalRepository>();
             services.AddScoped<IAccessoryRepository, AccessoryRepository>();
+            services.AddScoped<IReservationRepository, ReservationRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<RoleEntity> roleManager)
