@@ -1,9 +1,13 @@
 ﻿@using FissaBissa.Entities
-@inject SignInManager<UserEntity> SignInManager
+
+@inject SignInManager<UserEntity> _signInManager
 
 <ul class="nav nav-pills flex-column">
     <li class="nav-item">
         <a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @ManageNavPages.ReservationsNavClass(ViewContext)" id="reservations" asp-page="./Reservations">Reservations</a>
     </li>
     <li class="nav-item">
         <a class="nav-link @ManageNavPages.EmailNavClass(ViewContext)" id="email" asp-page="./Email">Email</a>

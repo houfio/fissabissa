@@ -11,7 +11,7 @@ namespace FissaBissa.Repositories
 {
     public interface IReservationRepository
     {
-        Task<ICollection<ReservationEntity>> Get(DateTime? date = null);
+        Task<ICollection<ReservationEntity>> Get(DateTime? date = null, string email = null);
         Task<ReservationEntity> Get(Guid id);
         Task<ReservationEntity> Create(ReservationModel model);
         Task Delete(Guid id);
@@ -26,10 +26,11 @@ namespace FissaBissa.Repositories
             _context = context;
         }
 
-        public async Task<ICollection<ReservationEntity>> Get(DateTime? date)
+        public async Task<ICollection<ReservationEntity>> Get(DateTime? date, string email)
         {
             return await _context.Reservations
-                .Where((r) => date == null || r.Date.Date == date.Value.Date)
+                .Where(r => date == null || r.Date.Date == date.Value.Date)
+                .Where(r => email == null || r.Email == email)
                 .ToListAsync();
         }
 
