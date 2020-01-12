@@ -117,19 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Animal List" xml:space="preserve">
-    <value>Lijst van Diertjes</value>
+  <data name="Create a new account." xml:space="preserve">
+    <value>Creër nieuw account.</value>
   </data>
-  <data name="Create new" xml:space="preserve">
-    <value>Nieuwe creëren</value>
+  <data name="Register" xml:space="preserve">
+    <value>Registreren</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Verwijder</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Gegevens</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Aanpassen</value>
+  <data name="Register as a new user" xml:space="preserve">
+    <value>Registreren als nieuwe gebruiker</value>
   </data>
 </root>

@@ -9,7 +9,7 @@ namespace FissaBissa.Models
     {
         public Guid Id { get; set; }
 
-        [Required, StringLength(255, MinimumLength = 3)]
+        [Required, StringLength(255, MinimumLength = 3), Display(Name = "Name")]
         public string Name { get; set; }
 
         [Required, Display(Name = "Type")]
