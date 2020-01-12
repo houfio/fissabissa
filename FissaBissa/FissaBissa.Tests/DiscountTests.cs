@@ -9,16 +9,14 @@ namespace FissaBissa.Tests
 {
     public class DiscountTests
     {
-        private const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
-
         [Fact]
         public async Task GetDiscountsAsync_ReturnsTypeDiscount()
         {
             // Arrange
-            var service = new ServiceClient();
+            // var service = new ServiceClient();
 
             // Act
-            var result = await service.GetDiscountAsync(new DataModel
+            var result = GetDiscount(new DataModel
             {
                 Date = DateTime.Today,
                 Animals = new[]
@@ -31,29 +29,29 @@ namespace FissaBissa.Tests
 
             // Assert
             Assert.True(result.ContainsKey("3x test"));
-            Assert.Equal(15, result["3x test"]);
+            Assert.Equal(10, result["3x test"]);
         }
 
         [Fact]
         public async Task GetDiscountsAsync_ReturnsDuckDiscount()
         {
             // Arrange
-            var service = new ServiceClient();
+            // var service = new ServiceClient();
             var total = 0;
 
             // Act
             for (var i = 0; i < 100; i++)
             {
-                var result = await service.GetDiscountAsync(new DataModel
+                var result = GetDiscount(new DataModel
                 {
                     Date = DateTime.Today,
                     Animals = new[]
                     {
-                        new AnimalModel {Name = "Duck", Type = "test"}
+                        new AnimalModel {Name = "Eend", Type = "test"}
                     }
                 });
 
-                if (result.ContainsKey("Duck"))
+                if (result.ContainsKey("Eend"))
                 {
                     total++;
                 }
@@ -67,10 +65,10 @@ namespace FissaBissa.Tests
         public async Task GetDiscountsAsync_ReturnsDayDiscountMonday()
         {
             // Arrange
-            var service = new ServiceClient();
+             var service = new ServiceClient();
 
             // Act
-            var result = await service.GetDiscountAsync(new DataModel
+            var result = GetDiscount(new DataModel
             {
                 Date = GetNextDay(DayOfWeek.Monday),
                 Animals = Array.Empty<AnimalModel>()
@@ -85,10 +83,10 @@ namespace FissaBissa.Tests
         public async Task GetDiscountsAsync_ReturnsDayDiscountTuesday()
         {
             // Arrange
-            var service = new ServiceClient();
+            // var service = new ServiceClient();
 
             // Act
-            var result = await service.GetDiscountAsync(new DataModel
+            var result = GetDiscount(new DataModel
             {
                 Date = GetNextDay(DayOfWeek.Tuesday),
                 Animals = Array.Empty<AnimalModel>()
@@ -103,10 +101,10 @@ namespace FissaBissa.Tests
         public async Task GetDiscountsAsync_ReturnsAlphabetDiscount()
         {
             // Arrange
-            var service = new ServiceClient();
+            // var service = new ServiceClient();
 
             // Act
-            var result = await service.GetDiscountAsync(new DataModel
+            var result = GetDiscount(new DataModel
             {
                 Date = DateTime.Today,
                 Animals = new[]
@@ -133,7 +131,9 @@ namespace FissaBissa.Tests
             return date;
         }
 
-        // WHOOPS
+        // :(
+
+        private const string Alphabet = "abcdefghijklmnopqrstuvwxyz";
 
         public Dictionary<string, int> GetDiscount(DataModel model)
         {
