@@ -1,24 +1,27 @@
 ﻿@model AccessoryEntity
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>@Localizer["Create"]</h1>
 
-<h4>Accessory</h4>
-<hr/>
+<h4>@Localizer["Animal"]</h4>
+<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control"/>
+                <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price"></label>
-                <input asp-for="Price" class="form-control"/>
+                <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -30,14 +33,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
+                <input type="submit" value="@Localizer["Create"]" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">@Localizer["Back to List"]</a>
 </div>
 
 @section Scripts {

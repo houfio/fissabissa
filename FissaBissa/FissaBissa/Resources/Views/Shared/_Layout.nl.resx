@@ -120,4 +120,13 @@
   <data name="Bissa on tha Fissa!" xml:space="preserve">
     <value>Bissa op da Fissa!</value>
   </data>
+  <data name="next" xml:space="preserve">
+    <value>volgende</value>
+  </data>
+  <data name="Start the booking by picking a date" xml:space="preserve">
+    <value>Begin het boekingsproces door hieronder een dag te selecteren</value>
+  </data>
+  <data name="Welcome on this site! Here you can reserve animals for your party. Pick a date and follow the steps for the best party ever!" xml:space="preserve">
+    <value>Welkom op deze site! Hier kun je dieren boeken voor op jouw feestjes. Kies de dag van en volg te stappen om het beste fuifje ooit te organiseren!</value>
+  </data>
 </root>

@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Bissa on tha Fissa!" xml:space="preserve">
-    <value>Bissa op da Fissa!</value>
+  <data name="Animal" xml:space="preserve">
+    <value>Diertje</value>
+  </data>
+  <data name="Back to List" xml:space="preserve">
+    <value>Terug naar lijst</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Creëren</value>
   </data>
 </root>

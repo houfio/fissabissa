@@ -20,6 +20,8 @@ namespace FissaBissa.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData["message"] = _localizer["Bissa op da Fissa!"];
+
             return View();
         }
 
