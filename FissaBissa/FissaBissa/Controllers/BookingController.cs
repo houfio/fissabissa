@@ -62,7 +62,9 @@ namespace FissaBissa.Controllers
                 return await Index(model);
             }
 
-            ViewData["Accessories"] = await _accessoryRepo.Get();
+            var animals = await Task.WhenAll(model.Animals.Select(_animalRepo.Get));
+
+            ViewData["Accessories"] = animals.SelectMany(a => a.Accessories).Select(a => a.Accessory).ToList();
 
             return View(model);
         }
@@ -97,7 +99,7 @@ namespace FissaBissa.Controllers
             }
 
             var animals = model.Animals
-                .Select((a) => _animalRepo.Get(a).Result)
+                .Select(a => _animalRepo.Get(a).Result)
                 .ToList();
             var accessories = model.Accessories
                 .Select(a => _accessoryRepo.Get(a).Result)

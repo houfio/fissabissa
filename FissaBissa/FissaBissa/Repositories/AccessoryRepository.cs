@@ -12,8 +12,8 @@ namespace FissaBissa.Repositories
     {
         Task<ICollection<AccessoryEntity>> Get();
         Task<AccessoryEntity> Get(Guid id);
-        Task Create(AccessoryModel model, string path);
-        Task Update(AccessoryModel model, string path);
+        Task<AccessoryEntity> Create(AccessoryModel model, string path);
+        Task<AccessoryEntity> Update(AccessoryModel model, string path);
         Task Delete(Guid id);
     }
 
@@ -36,7 +36,7 @@ namespace FissaBissa.Repositories
             return await _context.Accessories.FindAsync(id);
         }
 
-        public async Task Create(AccessoryModel model, string path)
+        public async Task<AccessoryEntity> Create(AccessoryModel model, string path)
         {
             var entity = new AccessoryEntity();
 
@@ -46,9 +46,11 @@ namespace FissaBissa.Repositories
             _context.Add(entity);
 
             await _context.SaveChangesAsync();
+
+            return entity;
         }
 
-        public async Task Update(AccessoryModel model, string path)
+        public async Task<AccessoryEntity> Update(AccessoryModel model, string path)
         {
             var entity = await Get(model.Id);
 
@@ -58,6 +60,8 @@ namespace FissaBissa.Repositories
             _context.Update(entity);
 
             await _context.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task Delete(Guid id)
