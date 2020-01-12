@@ -9,8 +9,12 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 {
     public class EmailModel : PageModel
     {
-        [BindProperty] public EmailInputModel Input { get; set; }
-        [TempData] public string StatusMessage { get; set; }
+        [BindProperty]
+        public EmailInputModel Input { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public string Email { get; set; }
 
         private readonly UserManager<UserEntity> _userManager;

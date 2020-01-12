@@ -28,7 +28,8 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var personalDataProps = typeof(IdentityUser).GetProperties()
+            var personalDataProps = typeof(UserEntity)
+                .GetProperties()
                 .Where(prop => Attribute.IsDefined(prop, typeof(PersonalDataAttribute)));
             var personalData = personalDataProps
                 .ToDictionary(p => p.Name, p => p.GetValue(user)?.ToString() ?? "null");

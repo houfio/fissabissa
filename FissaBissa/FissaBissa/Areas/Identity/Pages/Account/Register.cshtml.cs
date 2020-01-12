@@ -11,7 +11,9 @@ namespace FissaBissa.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        [BindProperty] public RegisterInputModel Input { get; set; }
+        [BindProperty]
+        public RegisterInputModel Input { get; set; }
+
         public string ReturnUrl { get; set; }
 
         private readonly SignInManager<UserEntity> _signInManager;
@@ -38,7 +40,11 @@ namespace FissaBissa.Areas.Identity.Pages.Account
                 {
                     UserName = Input.Email,
                     Email = Input.Email,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FullName = Input.FullName,
+                    PhoneNumber = Input.PhoneNumber,
+                    PhoneNumberConfirmed = true,
+                    Address = Input.Address
                 };
 
                 var createResult = await _userManager.CreateAsync(user, Input.Password);
@@ -80,15 +86,23 @@ namespace FissaBissa.Areas.Identity.Pages.Account
         [Required, EmailAddress, Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required, DataType(DataType.Password), Display(Name = "Password"),
-         StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.",
-             MinimumLength = 6)]
+        [Required, Display(Name = "Name"), StringLength(100, MinimumLength = 6)]
+        public string FullName { get; set; }
+
+        [Required, Phone, Display(Name = "Phone number")]
+        public string PhoneNumber { get; set; }
+
+        [Required, Display(Name = "Address"), StringLength(100, MinimumLength = 6)]
+        public string Address { get; set; }
+
+        [Required, DataType(DataType.Password), Display(Name = "Password"), StringLength(100, MinimumLength = 6)]
         public string Password { get; set; }
 
         [DataType(DataType.Password), Display(Name = "Confirm password"),
          Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Display(Name = "Administrator")] public bool Admin { get; set; }
+        [Display(Name = "Administrator")]
+        public bool Admin { get; set; }
     }
 }

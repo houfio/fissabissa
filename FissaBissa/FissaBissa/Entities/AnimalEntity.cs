@@ -9,10 +9,18 @@ namespace FissaBissa.Entities
     public class AnimalEntity : ITransformer<AnimalModel>
     {
         public Guid Id { get; set; }
-        [Required] public string Name { get; set; }
-        [Required] public int TypeId { get; set; }
-        [Required] public float Price { get; set; }
-        [Required] public string Image { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public int TypeId { get; set; }
+
+        [Required]
+        public float Price { get; set; }
+
+        [Required]
+        public string Image { get; set; }
 
         public virtual AnimalTypeEntity Type { get; set; }
         public virtual List<AnimalAccessoryEntity> Accessories { get; set; }

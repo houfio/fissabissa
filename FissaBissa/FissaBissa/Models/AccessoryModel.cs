@@ -14,6 +14,7 @@ namespace FissaBissa.Models
         [Required, Range(0, 10000), DataType(DataType.Currency)]
         public float Price { get; set; }
 
-        [Required] public IFormFile Image { get; set; }
+        [Required]
+        public IFormFile Image { get; set; }
     }
 }

@@ -9,8 +9,11 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        [BindProperty] public PasswordInputModel Input { get; set; }
-        [TempData] public string StatusMessage { get; set; }
+        [BindProperty]
+        public PasswordInputModel Input { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
 
         private readonly UserManager<UserEntity> _userManager;
         private readonly SignInManager<UserEntity> _signInManager;

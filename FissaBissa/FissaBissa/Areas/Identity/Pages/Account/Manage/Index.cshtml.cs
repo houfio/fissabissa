@@ -10,8 +10,12 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {
-        [BindProperty] public IndexInputModel Input { get; set; }
-        [TempData] public string StatusMessage { get; set; }
+        [BindProperty]
+        public IndexInputModel Input { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public string Username { get; set; }
 
         private readonly UserManager<UserEntity> _userManager;
@@ -23,15 +27,14 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        private async Task LoadAsync(UserEntity user)
+        private void Load(UserEntity user)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-
-            Username = userName;
+            Username = user.UserName;
             Input = new IndexInputModel
             {
-                PhoneNumber = phoneNumber
+                FullName = user.FullName,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address
             };
         }
 
@@ -44,7 +47,7 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            Load(user);
 
             return Page();
         }
@@ -60,23 +63,25 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                Load(user);
+
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            user.FullName = Input.FullName;
+            user.PhoneNumber = Input.PhoneNumber;
+            user.Address = Input.Address;
 
-            if (Input.PhoneNumber != phoneNumber)
+            var updateResult = await _userManager.UpdateAsync(user);
+
+            if (!updateResult.Succeeded)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-
-                if (!setPhoneResult.Succeeded)
+                foreach (var error in updateResult.Errors)
                 {
-                    var userId = await _userManager.GetUserIdAsync(user);
-
-                    throw new InvalidOperationException(
-                        $"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                    ModelState.AddModelError(string.Empty, error.Description);
                 }
+
+                return Page();
             }
 
             await _signInManager.RefreshSignInAsync(user);
@@ -88,7 +93,13 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 
     public class IndexInputModel
     {
-        [Phone, Display(Name = "Phone number")]
+        [Required, Display(Name = "Name"), StringLength(100, MinimumLength = 6)]
+        public string FullName { get; set; }
+
+        [Required, Phone, Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
+
+        [Required, Display(Name = "Address"), StringLength(100, MinimumLength = 6)]
+        public string Address { get; set; }
     }
 }

@@ -11,11 +11,13 @@ namespace FissaBissa.Models
         [Required, StringLength(255, MinimumLength = 3)]
         public string Name { get; set; }
 
-        [Required, Display(Name = "Type")] public int TypeId { get; set; }
+        [Required, Display(Name = "Type")]
+        public int TypeId { get; set; }
 
         [Required, Range(0, 10000), DataType(DataType.Currency)]
         public float Price { get; set; }
 
-        [Required] public IFormFile Image { get; set; }
+        [Required]
+        public IFormFile Image { get; set; }
     }
 }

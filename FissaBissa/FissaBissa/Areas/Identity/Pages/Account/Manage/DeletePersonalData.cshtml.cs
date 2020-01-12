@@ -10,7 +10,8 @@ namespace FissaBissa.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
-        [BindProperty] public DeleteDataInputModel Input { get; set; }
+        [BindProperty]
+        public DeleteDataInputModel Input { get; set; }
 
         private readonly UserManager<UserEntity> _userManager;
         private readonly SignInManager<UserEntity> _signInManager;
