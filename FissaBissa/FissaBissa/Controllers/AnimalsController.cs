@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using FissaBissa.Data;
-using FissaBissa.Entities;
 using FissaBissa.Models;
 using FissaBissa.Utilities;
 using Microsoft.AspNetCore.Authorization;
@@ -16,19 +12,17 @@ namespace FissaBissa.Controllers
     [Authorize(Roles = "Admin")]
     public class AnimalsController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IAnimalRepository _AnimalRepo;
+        private readonly IAnimalRepository _repo;
 
-        public AnimalsController(ApplicationDbContext context, IAnimalRepository AnimalRepo)
+        public AnimalsController(IAnimalRepository repo)
         {
-            _context = context;
-            _AnimalRepo = AnimalRepo;
+            _repo = repo;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _AnimalRepo.Get());
+            return View(await _repo.Get());
         }
 
         [HttpGet]
@@ -39,7 +33,7 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _AnimalRepo.Get(id);
+            var model = await _repo.Get(id.Value);
 
             if (model == null)
             {
@@ -50,9 +44,9 @@ namespace FissaBissa.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["TypeId"] = new SelectList(_context.AnimalTypes, "Id", "Name");
+            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name");
 
             return View();
         }
@@ -65,12 +59,12 @@ namespace FissaBissa.Controllers
 
             if (ModelState.IsValid)
             {
-                await Task.Run(() => _AnimalRepo.Create(model, path));
+                await _repo.Create(model, path);
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TypeId"] = new SelectList(_context.AnimalTypes, "Id", "Name", model.TypeId);
+            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name", model.TypeId);
 
             return View(model);
         }
@@ -83,14 +77,14 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _AnimalRepo.Get(id);
+            var model = await _repo.Get(id.Value);
 
             if (model == null)
             {
                 return NotFound();
             }
 
-            ViewData["TypeId"] = new SelectList(_context.AnimalTypes, "Id", "Name", model.TypeId);
+            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name", model.TypeId);
 
             return View(model.Transform());
         }
@@ -108,24 +102,12 @@ namespace FissaBissa.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await Task.Run(() => _AnimalRepo.Update(model, path));
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Animals.Any(e => e.Id == model.Id))
-                    {
-                        return NotFound();
-                    }
-
-                    throw;
-                }
+                await _repo.Update(model, path);
 
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["TypeId"] = new SelectList(_context.AnimalTypes, "Id", "Name", model.TypeId);
+            ViewData["TypeId"] = new SelectList(await _repo.GetTypes(), "Id", "Name", model.TypeId);
 
             return View(model);
         }
@@ -138,7 +120,7 @@ namespace FissaBissa.Controllers
                 return NotFound();
             }
 
-            var model = await _AnimalRepo.Get(id);
+            var model = await _repo.Get(id.Value);
 
             if (model == null)
             {
@@ -148,11 +130,11 @@ namespace FissaBissa.Controllers
             return View(model);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            await Task.Run(() => _AnimalRepo.DeleteConfirmed(id));
+            await _repo.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }

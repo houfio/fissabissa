@@ -11,12 +11,11 @@ namespace FissaBissa.Repositories
     public interface IAnimalRepository
     {
         Task<ICollection<AnimalEntity>> Get();
-        Task<AnimalEntity> Get(Guid? id);
-        void Create(AnimalModel model, string path);
-        Task<AnimalEntity> Update(Guid? id);
-        void Update(AnimalModel model, string path);
-        Task<AnimalEntity> Delete(Guid? id);
-        void DeleteConfirmed(Guid id);
+        Task<ICollection<AnimalTypeEntity>> GetTypes();
+        Task<AnimalEntity> Get(Guid id);
+        Task Create(AnimalModel model, string path);
+        Task Update(AnimalModel model, string path);
+        Task Delete(Guid id);
     }
 
     public class AnimalRepository : IAnimalRepository
@@ -33,12 +32,17 @@ namespace FissaBissa.Repositories
             return await _context.Animals.ToListAsync();
         }
 
-        public async Task<AnimalEntity> Get(Guid? id)
+        public async Task<ICollection<AnimalTypeEntity>> GetTypes()
+        {
+            return await _context.AnimalTypes.ToListAsync();
+        }
+
+        public async Task<AnimalEntity> Get(Guid id)
         {
             return await _context.Animals.FindAsync(id);
         }
 
-        public async void Create(AnimalModel model, string path)
+        public async Task Create(AnimalModel model, string path)
         {
             var entity = new AnimalEntity();
 
@@ -47,15 +51,10 @@ namespace FissaBissa.Repositories
 
             _context.Add(entity);
 
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<AnimalEntity> Update(Guid? id)
-        {
-            return await _context.Animals.FindAsync(id);
-        }
-
-        public async void Update(AnimalModel model, string path)
+        public async Task Update(AnimalModel model, string path)
         {
             var entity = await _context.Animals.FindAsync(model.Id);
 
@@ -67,12 +66,7 @@ namespace FissaBissa.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<AnimalEntity> Delete(Guid? id)
-        {
-            return await _context.Animals.FindAsync(id);
-        }
-
-        public async void DeleteConfirmed(Guid id)
+        public async Task Delete(Guid id)
         {
             var model = await _context.Animals.FindAsync(id);
 

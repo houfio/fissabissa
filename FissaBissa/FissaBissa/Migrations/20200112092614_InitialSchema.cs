@@ -96,20 +96,19 @@ namespace FissaBissa.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
-                    TypeId = table.Column<int>(nullable: false),
+                    TypeId = table.Column<Guid>(nullable: false),
                     Price = table.Column<float>(nullable: false),
-                    Image = table.Column<string>(nullable: false),
-                    TypeId1 = table.Column<Guid>(nullable: true)
+                    Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Animals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Animals_AnimalTypes_TypeId1",
-                        column: x => x.TypeId1,
+                        name: "FK_Animals_AnimalTypes_TypeId",
+                        column: x => x.TypeId,
                         principalTable: "AnimalTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,10 +294,10 @@ namespace FissaBissa.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("35328083-73c5-4351-8948-a116a32c6bd6"), "Jungle" },
-                    { new Guid("c1a61165-f6e1-488b-abb5-9a3eee4f7a0f"), "Boerderij" },
-                    { new Guid("8aace6ec-6b30-4030-8ee4-f1b459380166"), "Sneeuw" },
-                    { new Guid("4ed7049e-a4ee-40c7-b473-7d9c91e11f9a"), "Woestijn" }
+                    { new Guid("bf550047-1eed-479f-a691-bf7d4c22bf17"), "Jungle" },
+                    { new Guid("ad2c48ee-930a-428b-9b09-d2a23a7d9f4a"), "Boerderij" },
+                    { new Guid("83e184af-10f4-4959-8013-bab04b09d0d4"), "Sneeuw" },
+                    { new Guid("4b1ccc83-a651-4101-807b-246f94c80b90"), "Woestijn" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -317,9 +316,9 @@ namespace FissaBissa.Migrations
                 column: "ReservationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Animals_TypeId1",
+                name: "IX_Animals_TypeId",
                 table: "Animals",
-                column: "TypeId1");
+                column: "TypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

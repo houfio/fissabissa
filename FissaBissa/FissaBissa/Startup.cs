@@ -1,3 +1,4 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,14 @@ namespace FissaBissa
                 options.SupportedUICultures = supportedCultures;
             });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddMvc()
@@ -79,6 +88,7 @@ namespace FissaBissa
             app.UseStaticFiles();
             app.UseRequestLocalization();
             app.UseRouting();
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -88,15 +88,12 @@ namespace FissaBissa.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
-                    b.Property<int>("TypeId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("TypeId1")
+                    b.Property<Guid>("TypeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TypeId1");
+                    b.HasIndex("TypeId");
 
                     b.ToTable("Animals");
                 });
@@ -133,22 +130,22 @@ namespace FissaBissa.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("35328083-73c5-4351-8948-a116a32c6bd6"),
+                            Id = new Guid("bf550047-1eed-479f-a691-bf7d4c22bf17"),
                             Name = "Jungle"
                         },
                         new
                         {
-                            Id = new Guid("c1a61165-f6e1-488b-abb5-9a3eee4f7a0f"),
+                            Id = new Guid("ad2c48ee-930a-428b-9b09-d2a23a7d9f4a"),
                             Name = "Boerderij"
                         },
                         new
                         {
-                            Id = new Guid("8aace6ec-6b30-4030-8ee4-f1b459380166"),
+                            Id = new Guid("83e184af-10f4-4959-8013-bab04b09d0d4"),
                             Name = "Sneeuw"
                         },
                         new
                         {
-                            Id = new Guid("4ed7049e-a4ee-40c7-b473-7d9c91e11f9a"),
+                            Id = new Guid("4b1ccc83-a651-4101-807b-246f94c80b90"),
                             Name = "Woestijn"
                         });
                 });
@@ -420,7 +417,9 @@ namespace FissaBissa.Migrations
                 {
                     b.HasOne("FissaBissa.Entities.AnimalTypeEntity", "Type")
                         .WithMany()
-                        .HasForeignKey("TypeId1");
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FissaBissa.Entities.AnimalReservationEntity", b =>
