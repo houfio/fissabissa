@@ -1,21 +1,24 @@
 ﻿@model ReservationModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @{
     ViewData["Title"] = "Index";
     var animals = ViewData["Animals"] as ICollection<AnimalEntity>;
     var unavailable = ViewData["Unavailable"] as ICollection<Guid>;
 }
 
-<h1>Booking - Animals</h1>
+<h1>@Localizer["Booking - Animals"]</h1>
 
 <div class="row">
     <div class="col-md-9">
         <div class="card">
             <div class="card-header">
-                Stap 1 - Kies je beestjes
+                @Localizer["Step 1 - Choose your animals"]
             </div>
             <div class="card-body">
                 <form asp-action="Accessories">
-                    <input type="hidden" asp-for="Date"/>
+                    <input type="hidden" asp-for="Date" />
                     @foreach (var animal in animals)
                     {
                         <div class="form-group @(unavailable.Contains(animal.Id) ? "force-disable" : "")" style="display: inline-block">
@@ -23,7 +26,7 @@
                                 <img src="@Url.Content(animal.Image)" class="card-img-top" alt="Image">
                                 <div class="card-body">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" id="@animal.Id" name="Animals" class="custom-control-input" value="@animal.Id"/>
+                                        <input type="checkbox" id="@animal.Id" name="Animals" class="custom-control-input" value="@animal.Id" />
                                         <label class="custom-control-label" for="@animal.Id">
                                             @Html.DisplayFor(model => animal.Name)
                                         </label>
@@ -33,12 +36,12 @@
                         </div>
                     }
                     <div>
-                        <input type="submit" value="Next" class="btn btn-primary"/>
+                        <input type="submit" value="@Localizer["Next"]" class="btn btn-primary" />
                         <span asp-validation-for="Animals" class="text-danger"></span>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <partial name="_OverviewPartial"/>
+    <partial name="_OverviewPartial" />
 </div>

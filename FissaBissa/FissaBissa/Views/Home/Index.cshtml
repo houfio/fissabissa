@@ -1,21 +1,24 @@
 ﻿@model ReservationModel
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["title"] = Localizer["Bissa on tha Fissa!"];
 }
 
 <div class="jumbotron">
-    <h1 class="display-4">Bissa on da Fissa!</h1>
-    <p class="lead">Welkom op deze site! Hier kun je dieren boeken voor op jouw feestjes. Kies de dag van en volg te stappen om het beste fuifje ooit te organiseren!</p>
+    <h1 class="display-4">@Localizer["Bissa on tha Fissa!"]</h1>
+    <p class="lead">@Localizer["Welcome on this site! Here you can reserve animals for your party. Pick a date and follow the steps for the best party ever!"]</p>
     <hr class="my-4">
-    <p>Begin het boekingsproces door hieronder een dag te selecteren</p>
+    <p>@Localizer["Start the booking by picking a date"]</p>
     <div class="row">
         <div class="col-md-4">
             <form asp-controller="Booking" asp-action="Index">
                 <div class="form-group">
                     <div class="input-group">
-                        <input asp-for="Date" class="form-control"/>
+                        <input asp-for="Date" class="form-control" />
                         <div class="input-group-append">
-                            <input type="submit" value="Next" class="btn btn-primary"/>
+                            <input type="submit" value="@Localizer["next"]" class="btn btn-primary" />
                         </div>
                     </div>
                     <span asp-validation-for="Date" class="text-danger"></span>

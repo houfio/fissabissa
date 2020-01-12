@@ -1,21 +1,23 @@
 ﻿@model ReservationModel
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@inject IViewLocalizer Localizer
 @inject IAnimalRepository _animalRepository
 @inject IAccessoryRepository _accessoryRepository
 
 <div class="col-md-3 mt-4 mt-md-0">
     <div class="card">
         <div class="card-header">
-            Boeking
+            @Localizer["Reservation"]
         </div>
         <div class="card-body">
             Datum: @Html.DisplayFor(model => model.Date)
-            <hr class="my-4"/>
-            <span class="d-inline-block mb-1">Beestjes</span><br/>
+            <hr class="my-4" />
+            <span class="d-inline-block mb-1">@Localizer["Animals"]</span><br />
             @if (Model.Animals.Count == 0)
             {
                 <small>
-                    Geen beestjes geselecteerd
+                    @Localizer["No animals have been selected"]
                 </small>
             }
             else
@@ -31,12 +33,12 @@
                     }
                 </ul>
             }
-            <hr class="my-4"/>
-            <span class="d-inline-block mb-1">Accessories</span><br/>
+            <hr class="my-4" />
+            <span class="d-inline-block mb-1">@Localizer["Accessories"]</span><br />
             @if (Model.Accessories.Count == 0)
             {
                 <small>
-                    Geen accessories geselecteerd
+                    @Localizer["No accessories have been selected"]
                 </small>
             }
             else
