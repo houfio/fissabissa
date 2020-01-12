@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FissaBissa", "FissaBissa\Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FissaBissa.Discounts", "FissaBissa.Discounts\FissaBissa.Discounts.csproj", "{452FA841-2489-43E7-9102-AC1DB33AC033}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FissaBissa.Tests", "FissaBissa.Tests\FissaBissa.Tests.csproj", "{9950A100-5170-443C-9E06-7B451ACD44C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FissaBissa.Tests", "FissaBissa.Tests\FissaBissa.Tests.csproj", "{9950A100-5170-443C-9E06-7B451ACD44C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

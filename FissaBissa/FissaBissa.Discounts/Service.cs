@@ -30,7 +30,7 @@ namespace FissaBissa.Discounts
                 discounts["Dag"] = 15;
             }
 
-            var discount = model.Animals.Select(a => Enumerable.Range(0, Alphabet.Length).Aggregate(0, (result, current) => result == current && a.Name.Contains(Alphabet[current]) ? result + 1  : result) * 2).Sum();
+            var discount = model.Animals.Select(a => Enumerable.Range(0, Alphabet.Length).Aggregate(0, (result, current) => result == current && a.Name.ToLowerInvariant().Contains(Alphabet[current]) ? result + 1  : result) * 2).Sum();
 
             if (discount > 0)
             {
